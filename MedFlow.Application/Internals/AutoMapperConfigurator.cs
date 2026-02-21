@@ -1,5 +1,7 @@
 using Application.Business.Categories.Requests;
 using Application.Business.Categories.Responses;
+using Application.Business.Users.Requests;
+using Application.Business.Users.Responses;
 using AutoMapper;
 using Domain.Entities;
 
@@ -19,5 +21,15 @@ public sealed class AutoMapperConfigurator : Profile
         CreateMap<Category, UpdateCategoryResponse>();
         CreateMap<Category, GetCategoryByIdResponse>();
         CreateMap<Category, GetAllCategoriesResponse>();
+
+        CreateMap<RegisterUserRequest, User>();
+        CreateMap<User, RegisterUserResponse>();
+
+        
+        CreateMap<LoginUserRequest, User>();
+        CreateMap<User, LoginUserResponse>();
+
+
+
     }
 }

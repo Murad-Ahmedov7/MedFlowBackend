@@ -8,3 +8,4 @@ public record class CreateCategoryRequest : IRequest<Result<CreateCategoryRespon
 {
     public string Name { get; set; } = string.Empty;
 }
+    

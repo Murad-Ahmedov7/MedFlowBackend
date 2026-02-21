@@ -1,4 +1,4 @@
-using DataAccess.Internals;
+﻿using DataAccess.Internals;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,6 +32,10 @@ public sealed class SqlCategoryRepository : BaseSqlRepository
     {
         DbContext.Categories.Update(category);
     }
+
+    // Soft silmə: obyekt DB-dən silinmir, yalnız silinmiş kimi işarələnir
+
+    // Soft delete: entity is not removed from DB, only marked as deleted
 
     public void Delete(Category category)
     {

@@ -22,12 +22,12 @@ internal sealed class CreateCategoryCommand : SysRequestHandler<CreateCategoryRe
 
     public override async Task<Result<CreateCategoryResponse>> Handle(CreateCategoryRequest request, CancellationToken cancellationToken)
     {
-        var newCategory = _mapper.Map<Category>(request);
-        newCategory.CreatedAt = DateTime.UtcNow;
-        newCategory.CreatedBy = GetCurrentUserIdOrThrow();
-        _sqlUnitOfWork.CategoryRepository.Add(newCategory);
-        await _sqlUnitOfWork.SaveChangesAsync();
-        var mappedNewCategory = _mapper.Map<CreateCategoryResponse>(newCategory);
-        return new Result<CreateCategoryResponse> { Data = mappedNewCategory };
+            var newCategory = _mapper.Map<Category>(request);
+            newCategory.CreatedAt = DateTime.UtcNow;
+            newCategory.CreatedBy = GetCurrentUserIdOrThrow();
+            _sqlUnitOfWork.CategoryRepository.Add(newCategory);
+            await _sqlUnitOfWork.SaveChangesAsync();
+            var mappedNewCategory = _mapper.Map<CreateCategoryResponse>(newCategory);
+            return new Result<CreateCategoryResponse> { Data = mappedNewCategory };
     }
 }

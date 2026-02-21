@@ -1,6 +1,7 @@
 using Application;
 using Application.Infrastructure;
 using DataAccess;
+using MedFlow.Api.Infrastructures;
 using MedFlow.Api.Infrastructures.Extensions;
 using MedFlow.Api.Infrastructures.Services;
 
@@ -11,8 +12,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSqlServerServices(connectionString!);
 builder.Services.AddApplicationServices();
+builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddScoped<ITokenProvider, TokenProvider>();
 
 builder.Services.AddSwaggerGen();
 
@@ -26,7 +29,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseExceptionHandling();
+app.UseAuthentication();    
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();

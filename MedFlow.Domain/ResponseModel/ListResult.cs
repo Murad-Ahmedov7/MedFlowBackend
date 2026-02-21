@@ -1,4 +1,15 @@
+﻿using System.Collections.Generic;
+using System.Data;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 namespace Domain.ResponseModel;
+
+
+// List datasını encapsulation ilə qoruyur və TotalCount-un Data.Count ilə
+// həmişə uyğun qalmasını təmin edir.
+
+// Encapsulates list data and ensures TotalCount always stays in sync
+// with the number of items in Data.
 
 public class ListResult<T> : Result
 {
