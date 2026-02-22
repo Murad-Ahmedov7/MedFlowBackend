@@ -11,3 +11,4 @@ public record class LoginUserRequest : IRequest<Result<LoginUserResponse>>
     public string Password { get; set; } = string.Empty;
 }
 
+    
