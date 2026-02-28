@@ -18,7 +18,7 @@ public sealed class CreatePatientRequestValidator : AbstractValidator<CreatePati
             .MinimumLength(3)
             .MaximumLength(50);
 
-        RuleFor(x => x.Fin)
+        RuleFor(x => x.Fin.ToUpper())
             .NotEmpty()
             .Length(7, 10)
             .Matches("^[A-Z0-9]+$")

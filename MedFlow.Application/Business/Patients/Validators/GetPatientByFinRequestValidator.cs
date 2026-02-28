@@ -9,7 +9,7 @@ public sealed class GetPatientByFinRequestValidator : AbstractValidator<GetPatie
 {
     public GetPatientByFinRequestValidator()
     {
-        RuleFor(x => x.Fin)
+        RuleFor(x => x.Fin.ToUpper())
             .NotEmpty()
             .Length(7, 10)
             .Matches("^[A-Z0-9]+$")
