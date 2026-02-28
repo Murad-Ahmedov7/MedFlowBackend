@@ -22,10 +22,19 @@ public abstract class SysRequestHandler<TRequest, TResponse> : IRequestHandler<T
         }
     }
 
+    protected void ThrowNotFoundIfNull(object? data, string message = "Məlumat tapılmadı")
+    {
+        if (data == null)
+        {
+            throw new NotFoundException(message);
+        }
+    }
+
     protected void ThrowUserError(string message)
     {
         throw new ClientException(message);
     }
+
 
     protected Guid? GetCurrentUserId()
     {
@@ -33,7 +42,7 @@ public abstract class SysRequestHandler<TRequest, TResponse> : IRequestHandler<T
     }
 
     protected Guid GetCurrentUserIdOrThrow()
-    {
+    {   
         if (CurrentUserService == null)
             throw new UnauthorizedAccessException("İstifadəçi autentifikasiya olunmayıb");
 

@@ -1,5 +1,5 @@
 ﻿using DataAccess.Internals;
-using Domain.Entities;
+using Domain.Entities.Auth;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -28,12 +28,13 @@ namespace DataAccess.Repositories
 
         public void Update(User user)
         {
-            DbContext.Update(user);
+            DbContext.Users.Update(user);
         }
 
         public void Delete(User user)
         {
-            DbContext.Users.Remove(user);
+            user.IsDeleted= true;
+            DbContext.Users.Update(user);
         }
     }
 }

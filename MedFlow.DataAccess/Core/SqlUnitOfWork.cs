@@ -19,11 +19,14 @@ namespace DataAccess.Core;
 public sealed class SqlUnitOfWork
 {
     private readonly MedDbContext _dbContext;
+
     private SqlCategoryRepository? _categoryRepository;
 
     private SqlUserRepository? _userRepository;
 
     private SqlAuthRepository? _authRepository;
+
+    private SqlPatientRepository? _patientRepository;
 
     public SqlUnitOfWork(MedDbContext dbContext)
     {
@@ -41,6 +44,8 @@ public sealed class SqlUnitOfWork
     public SqlUserRepository UserRepository=> _userRepository ??= new SqlUserRepository(_dbContext);
 
     public SqlAuthRepository AuthRepository=> _authRepository ??= new SqlAuthRepository(_dbContext);
+
+    public SqlPatientRepository PatientRepository => _patientRepository ??=new SqlPatientRepository(_dbContext);
 
 
     // DbContext üzərində edilmiş bütün dəyişiklikləri

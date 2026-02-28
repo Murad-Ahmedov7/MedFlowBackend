@@ -1,9 +1,13 @@
 using Application.Business.Categories.Requests;
 using Application.Business.Categories.Responses;
+using Application.Business.Patients.Requests;
+using Application.Business.Patients.Responses;
 using Application.Business.Users.Requests;
 using Application.Business.Users.Responses;
 using AutoMapper;
-using Domain.Entities;
+using Domain.Entities.Auth;
+using Domain.Entities.Demo;
+using Domain.Entities.Patients;
 
 namespace Application.Internals;
 
@@ -25,11 +29,13 @@ public sealed class AutoMapperConfigurator : Profile
         CreateMap<RegisterUserRequest, User>();
         CreateMap<User, RegisterUserResponse>();
 
-        
+
         CreateMap<LoginUserRequest, User>();
         CreateMap<User, LoginUserResponse>();
 
+        CreateMap<CreatePatientRequest, Patient>();
 
+        CreateMap<Patient,PatientResponse>();
 
     }
 }

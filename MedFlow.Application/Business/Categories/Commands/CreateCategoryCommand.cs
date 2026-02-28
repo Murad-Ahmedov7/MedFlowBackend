@@ -3,7 +3,7 @@ using Application.Business.Categories.Responses;
 using Application.Infrastructure;
 using AutoMapper;
 using DataAccess.Core;
-using Domain.Entities;
+using Domain.Entities.Demo;
 using Domain.ResponseModel;
 
 namespace Application.Business.Categories.Commands;

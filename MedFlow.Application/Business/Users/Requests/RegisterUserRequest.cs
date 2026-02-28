@@ -2,9 +2,7 @@
 using Domain.ResponseModel;
 using MediatR;
 
-
 namespace Application.Business.Users.Requests;
-
 
 public record class RegisterUserRequest : IRequest<Result<RegisterUserResponse>>
 {

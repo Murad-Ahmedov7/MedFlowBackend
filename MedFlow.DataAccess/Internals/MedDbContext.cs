@@ -1,4 +1,6 @@
-﻿using Domain.Entities;
+﻿using Domain.Entities.Auth;
+using Domain.Entities.Demo;
+using Domain.Entities.Patients;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Internals;
@@ -31,6 +33,8 @@ public sealed class MedDbContext : DbContext
 
         modelBuilder.Entity<User>().HasQueryFilter(e=> !e.IsDeleted);
 
+        modelBuilder.Entity<Patient>().HasQueryFilter(e=>!e.IsDeleted); 
+
     }
 
     public DbSet<Category> Categories { get; set; }
@@ -38,6 +42,8 @@ public sealed class MedDbContext : DbContext
     public DbSet<User> Users { get; set; }
 
     public DbSet<RefreshToken> RefreshTokens { get; set; }
+
+    public DbSet<Patient> Patients { get; set; }
 }
 
 

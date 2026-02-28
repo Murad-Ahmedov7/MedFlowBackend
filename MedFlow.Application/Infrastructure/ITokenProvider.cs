@@ -1,6 +1,4 @@
-﻿
-
-using Domain.Entities;
+﻿using Domain.Entities.Auth;
 
 namespace Application.Infrastructure;
 

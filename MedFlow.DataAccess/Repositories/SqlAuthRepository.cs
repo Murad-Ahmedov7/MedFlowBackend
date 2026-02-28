@@ -2,7 +2,7 @@
 
 
 using DataAccess.Internals;
-using Domain.Entities;
+using Domain.Entities.Auth;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repositories;

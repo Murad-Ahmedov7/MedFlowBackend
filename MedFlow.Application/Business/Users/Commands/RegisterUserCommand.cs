@@ -4,7 +4,7 @@ using Application.Business.Users.Responses;
 using Application.Infrastructure;
 using AutoMapper;
 using DataAccess.Core;
-using Domain.Entities;
+using Domain.Entities.Auth;
 using Domain.ResponseModel;
 using Isopoh.Cryptography.Argon2;
 

@@ -24,11 +24,23 @@ internal class ExceptionHandlerMiddleware
         {
             await WriteError(context, HttpStatusCode.BadRequest, new HttpErrorResponse(ex.Message, ex.Code));
         }
+
+        catch (NotFoundException ex) 
+
+        {
+            var errors = ex.Errors.Any()
+                ? ex.Errors.Select(e => new HttpErrorResponse(e))   
+                : [new HttpErrorResponse("Məlumat tapılmadı")];
+
+            await WriteError(context, HttpStatusCode.NotFound, errors);
+        }
+
+
         catch (ClientException ex)
         {
             var errors = ex.Errors.Any()
                 ? ex.Errors.Select(e => new HttpErrorResponse(e))
-                : [new HttpErrorResponse("Məlumat tapılmadı")];
+                : [new HttpErrorResponse("Client xətası")];
             await WriteError(context, HttpStatusCode.BadRequest, errors);
         }
         catch (UnauthorizedAccessException ex)
