@@ -29,4 +29,3 @@ public record class CreatePatientRequest:IRequest<Result<PatientResponse>>
     public string? Allergies { get; set; }
 
 }
-
