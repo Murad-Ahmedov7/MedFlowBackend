@@ -24,7 +24,7 @@ namespace Application.Business.Users.Commands
 
         public override async Task<Result<LoginUserResponse>> Handle(LoginUserRequest request, CancellationToken cancellationToken)
         {
-            var user = await _sqlUnitOfWork.UserRepository.GetByEmailAsync(request.Email);
+            var user = await _sqlUnitOfWork.UserRepository.GetByEmailAsync(request.Email,cancellationToken);
 
 
 
