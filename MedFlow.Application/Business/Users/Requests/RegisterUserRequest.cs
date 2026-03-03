@@ -1,4 +1,5 @@
 ﻿using Application.Business.Users.Responses;
+using Domain.Entities.Auth.Enums;
 using Domain.ResponseModel;
 using MediatR;
 
@@ -12,7 +13,10 @@ public record class RegisterUserRequest : IRequest<Result<RegisterUserResponse>>
 
     public string Phone { get; set; } = string.Empty;
 
+    public UserRoles UserRole { get; set; }
+
     public string Password { get; set; } = string.Empty;
 
     public string ConfirmPassword { get; set; } = string.Empty;
+
 }

@@ -18,8 +18,6 @@ public class TokenProvider : ITokenProvider
         _configuration = configuration;
     }
 
-
-
     public string GenerateAccessToken(User user)
     {
         var jwtSection = _configuration.GetSection("Jwt");
@@ -43,7 +41,7 @@ public class TokenProvider : ITokenProvider
                 new Claim(JwtRegisteredClaimNames.Iat,
                     DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
                     ClaimValueTypes.Integer64),
-
+                new Claim(ClaimTypes.Role,user.UserRole.ToString())
 
             };
 
@@ -59,8 +57,6 @@ public class TokenProvider : ITokenProvider
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
-
-
 
     public string GenerateRefreshToken()
     {

@@ -1,3 +1,4 @@
+using Domain.Entities.Auth.Enums;
 using Domain.Exceptions;
 using MediatR;
 
@@ -41,11 +42,15 @@ public abstract class SysRequestHandler<TRequest, TResponse> : IRequestHandler<T
         return CurrentUserService?.GetCurrentUserId();
     }
 
-    protected Guid GetCurrentUserIdOrThrow()
-    {   
-        if (CurrentUserService == null)
-            throw new UnauthorizedAccessException("İstifadəçi autentifikasiya olunmayıb");
+    protected UserRoles GetCurrentUserRoleOrThrow()
+    {
+        return CurrentUserService.GetCurrentUserRoleOrThrow();
+    }
 
+
+    protected Guid GetCurrentUserIdOrThrow()
+    {
         return CurrentUserService.GetCurrentUserIdOrThrow();
     }
 }
+

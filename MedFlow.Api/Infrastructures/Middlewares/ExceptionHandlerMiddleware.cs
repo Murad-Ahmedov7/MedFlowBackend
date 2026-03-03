@@ -25,11 +25,11 @@ internal class ExceptionHandlerMiddleware
             await WriteError(context, HttpStatusCode.BadRequest, new HttpErrorResponse(ex.Message, ex.Code));
         }
 
-        catch (NotFoundException ex) 
+        catch (NotFoundException ex)
 
         {
             var errors = ex.Errors.Any()
-                ? ex.Errors.Select(e => new HttpErrorResponse(e))   
+                ? ex.Errors.Select(e => new HttpErrorResponse(e))
                 : [new HttpErrorResponse("Məlumat tapılmadı")];
 
             await WriteError(context, HttpStatusCode.NotFound, errors);
@@ -46,6 +46,14 @@ internal class ExceptionHandlerMiddleware
         catch (UnauthorizedAccessException ex)
         {
             await WriteError(context, HttpStatusCode.Unauthorized, ex.Message);
+        }
+
+        catch (ForbiddenException ex)
+        {
+            var errors = ex.Errors.Any()
+                ? ex.Errors.Select(e => new HttpErrorResponse(e))
+                : [new HttpErrorResponse("Forbidden")];
+            await WriteError(context, HttpStatusCode.Forbidden, errors);
         }
         catch (ServerException ex)
         {

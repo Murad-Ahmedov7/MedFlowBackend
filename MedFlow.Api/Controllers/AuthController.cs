@@ -1,6 +1,7 @@
 ﻿using Application.Business.Categories.Requests;
 using Application.Business.Users.Requests;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MedFlow.Api.Controllers;
@@ -16,6 +17,7 @@ public class AuthController : MedFlowApiController
         _mediator = mediator;
     }
 
+    [Authorize(Roles = "Admin,Receptionist")]
     [HttpPost("register")]
     public async Task<IActionResult> Create([FromBody] RegisterUserRequest request)
     {
