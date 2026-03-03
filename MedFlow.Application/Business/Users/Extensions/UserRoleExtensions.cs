@@ -9,7 +9,7 @@ public static class UserRoleExtensions
     {
         //{UserRoles.Admin,new UserRoles[] {UserRoles.Admin,UserRoles.Receptionist,UserRoles.Patient,UserRoles.Doctor}},
 
-        {UserRoles.Admin,new UserRoles[] {UserRoles.Receptionist,UserRoles.Patient,UserRoles.Doctor}},
+        {UserRoles.Admin,new UserRoles[] {UserRoles.Receptionist,UserRoles.Doctor}},
 
         {UserRoles.Receptionist,new UserRoles[] {UserRoles.Patient} }
     };
