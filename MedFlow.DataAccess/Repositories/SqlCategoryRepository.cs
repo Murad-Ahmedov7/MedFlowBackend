@@ -4,21 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repositories;
 
-public sealed class SqlCategoryRepository : BaseSqlRepository
+public sealed class SqlCategoryRepository : BaseSqlRepository<Category>
 {
     public SqlCategoryRepository(MedDbContext dbContext) : base(dbContext)
     {
-    }
-
-    public void Add(Category category)
-    {
-        DbContext.Add(category);
-    }
-
-    public async Task<Category?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-    {
-        return await DbContext.Categories
-            .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
     }
 
     public async Task<List<Category>> GetAllAsync(CancellationToken cancellationToken = default)
@@ -28,10 +17,6 @@ public sealed class SqlCategoryRepository : BaseSqlRepository
             .ToListAsync(cancellationToken);
     }
 
-    public void Update(Category category)
-    {
-        DbContext.Categories.Update(category);
-    }
 
     // Soft silmə: obyekt DB-dən silinmir, yalnız silinmiş kimi işarələnir
 

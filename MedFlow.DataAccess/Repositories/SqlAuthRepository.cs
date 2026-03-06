@@ -8,23 +8,11 @@ using Microsoft.EntityFrameworkCore;
 namespace DataAccess.Repositories;
 
 
-
-
-public sealed class SqlAuthRepository : BaseSqlRepository
+public sealed class SqlAuthRepository : BaseSqlRepository<RefreshToken>
 {
     public SqlAuthRepository(MedDbContext dbContext) : base(dbContext)
     {
 
-    }
-
-    public void Add(RefreshToken refreshToken)
-    {
-        DbContext.RefreshTokens.Add(refreshToken);
-    }
-
-    public void Update(RefreshToken refreshToken)
-    {
-        DbContext.RefreshTokens.Update(refreshToken);
     }
 
     public void Delete(RefreshToken refreshToken)

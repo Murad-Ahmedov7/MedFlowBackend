@@ -1,7 +1,7 @@
 ﻿using Application.Business.Patients.Requests;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace MedFlow.Api.Controllers;
 

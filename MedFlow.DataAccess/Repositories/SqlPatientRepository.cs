@@ -5,17 +5,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repositories;
 
-public sealed class SqlPatientRepository : BaseSqlRepository
+public sealed class SqlPatientRepository : BaseSqlRepository<Patient>
 {
     public SqlPatientRepository(MedDbContext dbContext) : base(dbContext)
     {
 
 
-    }
-
-    public void Add(Patient patient)
-    {
-        DbContext.Add(patient);
     }
 
     public async Task<Patient?> GetPatientByFinAsync(string fin, CancellationToken cancellationToken = default)
@@ -64,11 +59,6 @@ public sealed class SqlPatientRepository : BaseSqlRepository
 
         return await query.ToListAsync(cancellationToken);
 
-    }
-
-    public void Update(Patient patient)
-    {
-        DbContext.Patients.Update(patient);
     }
 
     public void Delete(Patient patient)
