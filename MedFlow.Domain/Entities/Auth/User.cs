@@ -1,5 +1,6 @@
 ﻿using Domain.Entities.Auth.Enums;
 using Domain.Entities.Base;
+using Domain.Entities.Doctors;
 
 namespace Domain.Entities.Auth
 {
@@ -12,6 +13,6 @@ namespace Domain.Entities.Auth
         public UserRoles UserRole { get; set; }
         public ICollection<RefreshToken> RefreshTokens { get; set; } = null!;
 
-
+        public Doctor? Doctor { get; set; }
     }
 }

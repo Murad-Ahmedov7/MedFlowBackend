@@ -1,6 +1,7 @@
 ﻿using Domain.Entities.Auth;
 using Domain.Entities.Demo;
 using Domain.Entities.Departments;
+using Domain.Entities.Doctors;
 using Domain.Entities.Patients;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,10 +33,13 @@ public sealed class MedDbContext : DbContext
 
         modelBuilder.Entity<Category>().HasQueryFilter(e => !e.IsDeleted);
 
-        modelBuilder.Entity<User>().HasQueryFilter(e=> !e.IsDeleted);
+        modelBuilder.Entity<User>().HasQueryFilter(e => !e.IsDeleted);
 
-        modelBuilder.Entity<Patient>().HasQueryFilter(e=>!e.IsDeleted); 
+        modelBuilder.Entity<Patient>().HasQueryFilter(e => !e.IsDeleted);
 
+        modelBuilder.Entity<Department>().HasQueryFilter(e => !e.IsDeleted);
+
+        modelBuilder.Entity<Doctor>().HasQueryFilter(e => !e.IsDeleted);
     }
 
     public DbSet<Category> Categories { get; set; }
@@ -47,6 +51,8 @@ public sealed class MedDbContext : DbContext
     public DbSet<Patient> Patients { get; set; }
 
     public DbSet<Department> Departments { get; set; }
+
+    public DbSet<Doctor> Doctors { get; set; }
 }
 
 

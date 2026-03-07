@@ -18,7 +18,7 @@ namespace MedFlow.Api.Controllers
             _mediator = mediator;
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateDepartmentRequest request)
         {
