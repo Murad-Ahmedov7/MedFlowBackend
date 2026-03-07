@@ -30,6 +30,8 @@ public sealed class SqlUnitOfWork
 
     private SqlDepartmentRepository? _departmentRepository;
 
+    private SqlDoctorRepository? _doctorRepository;
+
     public SqlUnitOfWork(MedDbContext dbContext)
     {
         _dbContext = dbContext;
@@ -50,6 +52,8 @@ public sealed class SqlUnitOfWork
     public SqlPatientRepository PatientRepository => _patientRepository ??=new SqlPatientRepository(_dbContext);
 
     public SqlDepartmentRepository DepartmentRepository => _departmentRepository ??= new SqlDepartmentRepository(_dbContext);
+
+    public SqlDoctorRepository DoctorRepository => _doctorRepository ??= new SqlDoctorRepository(_dbContext);
 
 
     // DbContext üzərində edilmiş bütün dəyişiklikləri
