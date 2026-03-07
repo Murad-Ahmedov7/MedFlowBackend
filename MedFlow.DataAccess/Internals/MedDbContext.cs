@@ -1,5 +1,6 @@
 ﻿using Domain.Entities.Auth;
 using Domain.Entities.Demo;
+using Domain.Entities.Departments;
 using Domain.Entities.Patients;
 using Microsoft.EntityFrameworkCore;
 
@@ -44,6 +45,8 @@ public sealed class MedDbContext : DbContext
     public DbSet<RefreshToken> RefreshTokens { get; set; }
 
     public DbSet<Patient> Patients { get; set; }
+
+    public DbSet<Department> Departments { get; set; }
 }
 
 
