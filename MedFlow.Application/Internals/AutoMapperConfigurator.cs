@@ -4,6 +4,8 @@ using Application.Business.Departments.Requests;
 using Application.Business.Departments.Responses;
 using Application.Business.Doctors.Requests;
 using Application.Business.Doctors.Responses;
+using Application.Business.DoctorSchedules.Requests;
+using Application.Business.DoctorSchedules.Responses;
 using Application.Business.Patients.Requests;
 using Application.Business.Patients.Responses;
 using Application.Business.Users.Requests;
@@ -13,6 +15,7 @@ using Domain.Entities.Auth;
 using Domain.Entities.Demo;
 using Domain.Entities.Departments;
 using Domain.Entities.Doctors;
+using Domain.Entities.DoctorSchedules;
 using Domain.Entities.Patients;
 
 namespace Application.Internals;
@@ -48,7 +51,10 @@ public sealed class AutoMapperConfigurator : Profile
         CreateMap<Department, DepartmentResponse>();
 
         CreateMap<CreateDoctorRequest, Doctor>();
-        CreateMap<Doctor, DoctorResponse>();    
+        CreateMap<Doctor, DoctorResponse>();
+
+        CreateMap<CreateDoctorScheduleRequest, DoctorSchedule>();
+        CreateMap<DoctorSchedule,DoctorScheduleResponse>();
 
 
     }

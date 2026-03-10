@@ -3,6 +3,7 @@
 using Domain.Entities.Auth;
 using Domain.Entities.Base;
 using Domain.Entities.Departments;
+using Domain.Entities.DoctorSchedules;
 
 
 namespace Domain.Entities.Doctors;
@@ -18,13 +19,11 @@ public class Doctor : BaseEntity
     public string? ImageUrl { get; set; }
 
     public User User { get; set; } = null!;
-   
-    public Department Department { get; set; }=null!;
 
+    public Department Department { get; set; } = null!;
 
-
+    public ICollection<DoctorSchedule> DoctorSchedules { get; set; }=null!;
 
 
 }
-
 

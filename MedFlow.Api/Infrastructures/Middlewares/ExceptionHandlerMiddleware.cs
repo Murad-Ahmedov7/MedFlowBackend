@@ -43,6 +43,14 @@ internal class ExceptionHandlerMiddleware
                 : [new HttpErrorResponse("Client xətası")];
             await WriteError(context, HttpStatusCode.BadRequest, errors);
         }
+
+        catch (ConflictException ex)
+        {
+            var errors = ex.Errors.Any()
+                ? ex.Errors.Select(e => new HttpErrorResponse(e))
+                : [new HttpErrorResponse("Conflict xətası")];
+            await WriteError(context, HttpStatusCode.Conflict, errors);
+        }
         catch (UnauthorizedAccessException ex)
         {
             await WriteError(context, HttpStatusCode.Unauthorized, ex.Message);

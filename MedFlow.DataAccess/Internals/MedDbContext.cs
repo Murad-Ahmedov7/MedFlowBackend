@@ -2,6 +2,7 @@
 using Domain.Entities.Demo;
 using Domain.Entities.Departments;
 using Domain.Entities.Doctors;
+using Domain.Entities.DoctorSchedules;
 using Domain.Entities.Patients;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,6 +41,8 @@ public sealed class MedDbContext : DbContext
         modelBuilder.Entity<Department>().HasQueryFilter(e => !e.IsDeleted);
 
         modelBuilder.Entity<Doctor>().HasQueryFilter(e => !e.IsDeleted);
+
+        modelBuilder.Entity<DoctorSchedule>().HasQueryFilter(e=>!e.IsDeleted);
     }
 
     public DbSet<Category> Categories { get; set; }
@@ -53,6 +56,8 @@ public sealed class MedDbContext : DbContext
     public DbSet<Department> Departments { get; set; }
 
     public DbSet<Doctor> Doctors { get; set; }
+
+    public DbSet<DoctorSchedule> DoctorSchedules { get; set; }
 }
 
 
