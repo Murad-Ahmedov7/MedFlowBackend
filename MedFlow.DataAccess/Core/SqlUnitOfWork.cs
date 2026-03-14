@@ -34,6 +34,8 @@ public sealed class SqlUnitOfWork
 
     private SqlDoctorScheduleRepository? _doctorScheduleRepository;
 
+    private SqlAppointmentRepository? _appointmentRepository;
+
     public SqlUnitOfWork(MedDbContext dbContext)
     {
         _dbContext = dbContext;
@@ -47,17 +49,21 @@ public sealed class SqlUnitOfWork
 
     public SqlCategoryRepository CategoryRepository => _categoryRepository ??= new SqlCategoryRepository(_dbContext);
 
-    public SqlUserRepository UserRepository=> _userRepository ??= new SqlUserRepository(_dbContext);
+    public SqlUserRepository UserRepository => _userRepository ??= new SqlUserRepository(_dbContext);
 
-    public SqlAuthRepository AuthRepository=> _authRepository ??= new SqlAuthRepository(_dbContext);
+    public SqlAuthRepository AuthRepository => _authRepository ??= new SqlAuthRepository(_dbContext);
 
-    public SqlPatientRepository PatientRepository => _patientRepository ??=new SqlPatientRepository(_dbContext);
+    public SqlPatientRepository PatientRepository => _patientRepository ??= new SqlPatientRepository(_dbContext);
 
     public SqlDepartmentRepository DepartmentRepository => _departmentRepository ??= new SqlDepartmentRepository(_dbContext);
 
     public SqlDoctorRepository DoctorRepository => _doctorRepository ??= new SqlDoctorRepository(_dbContext);
 
-    public SqlDoctorScheduleRepository DoctorScheduleRepository =>_doctorScheduleRepository ??=new SqlDoctorScheduleRepository(_dbContext);
+    public SqlDoctorScheduleRepository DoctorScheduleRepository => _doctorScheduleRepository ??= new SqlDoctorScheduleRepository(_dbContext);
+
+    public SqlAppointmentRepository AppointmentRepository => _appointmentRepository ??= new SqlAppointmentRepository(_dbContext);
+
+
 
 
     // DbContext üzərində edilmiş bütün dəyişiklikləri

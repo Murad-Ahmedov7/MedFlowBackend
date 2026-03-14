@@ -1,5 +1,6 @@
 ﻿
 
+using Domain.Entities.Appointments;
 using Domain.Entities.Auth;
 using Domain.Entities.Base;
 using Domain.Entities.Departments;
@@ -23,6 +24,8 @@ public class Doctor : BaseEntity
     public Department Department { get; set; } = null!;
 
     public ICollection<DoctorSchedule> DoctorSchedules { get; set; }=null!;
+
+    public ICollection<Appointment> Appointments { get; set; }=null!;
 
 
 }

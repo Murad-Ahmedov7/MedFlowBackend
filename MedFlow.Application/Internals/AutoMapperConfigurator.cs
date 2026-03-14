@@ -1,3 +1,5 @@
+using Application.Business.Appointments.Requests;
+using Application.Business.Appointments.Responses;
 using Application.Business.Categories.Requests;
 using Application.Business.Categories.Responses;
 using Application.Business.Departments.Requests;
@@ -11,6 +13,7 @@ using Application.Business.Patients.Responses;
 using Application.Business.Users.Requests;
 using Application.Business.Users.Responses;
 using AutoMapper;
+using Domain.Entities.Appointments;
 using Domain.Entities.Auth;
 using Domain.Entities.Demo;
 using Domain.Entities.Departments;
@@ -56,6 +59,10 @@ public sealed class AutoMapperConfigurator : Profile
         CreateMap<CreateDoctorScheduleRequest, DoctorSchedule>();
         CreateMap<DoctorSchedule,DoctorScheduleResponse>();
 
+        CreateMap<CreateAppointmentRequest, Appointment>();
+        CreateMap<Appointment, CreateAppointmentResponse>();
 
+        CreateMap<Appointment, AppointmentResponse>()
+            .ForMember( dest => dest.DoctorName,opt => opt.MapFrom(src => src.Doctor.User.FullName));
     }
 }

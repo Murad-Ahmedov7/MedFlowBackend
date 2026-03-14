@@ -11,16 +11,22 @@ public sealed class SqlDoctorScheduleRepository : BaseSqlRepository<DoctorSchedu
     public SqlDoctorScheduleRepository(MedDbContext dbContext) : base(dbContext)
     {
 
-
     }
 
-    public async Task<List<DayOfWeek>> GetDayOfWeeksByDoctorIdAsync(Guid DoctorId, CancellationToken cancellationToken = default)
+    public async Task<List<DayOfWeek>> GetDayOfWeeksByDoctorIdAsync(Guid doctorId, CancellationToken cancellationToken = default)
     {
         return await DbContext.DoctorSchedules
-            .Where(d => d.DoctorId == DoctorId)
+            .Where(d => d.DoctorId == doctorId)
             .Select(d => d.DayOfWeek)
             .ToListAsync(cancellationToken);
     }
 
+    public async Task<DoctorSchedule?> GetDoctorScheduleByDoctorAndDayAsync(Guid doctorId, DayOfWeek dayOfWeek, CancellationToken cancellationToken = default)
+    {
+
+        return await DbContext.DoctorSchedules
+             .SingleOrDefaultAsync(d => d.DoctorId == doctorId && d.DayOfWeek == dayOfWeek);
+    }
 }
+
 

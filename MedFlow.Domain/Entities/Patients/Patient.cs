@@ -1,9 +1,11 @@
-﻿using Domain.Entities.Base;
+﻿
+using Domain.Entities.Appointments;
+using Domain.Entities.Base;
 using Domain.Entities.Patients.Enums;
 
 namespace Domain.Entities.Patients;
 
-public class Patient:BaseEntity
+public class Patient : BaseEntity
 {
     public string FirstName { get; set; } = null!;
 
@@ -14,12 +16,14 @@ public class Patient:BaseEntity
     public string Phone { get; set; } = null!;
 
     public string? Address { get; set; }
-    public DateTime  BirthDate { get; set; }
+    public DateTime BirthDate { get; set; }
 
     public Gender Gender { get; set; }
 
     public BloodGroup BloodGroup { get; set; }
 
     public string? Allergies { get; set; }
+
+    public ICollection<Appointment> Appointments { get; set; } = null!;
 }
 
