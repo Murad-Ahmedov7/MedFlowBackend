@@ -19,9 +19,9 @@ public class AppointmentController : MedFlowApiController
         _mediator = mediator;
     }
 
-    [Authorize(Roles ="Admin, Receptionist")]
+    [Authorize(Roles = "Admin, Receptionist")]
     [HttpPost]
-    public async Task<IActionResult> Post(CreateAppointmentRequest request)
+    public async Task<IActionResult> Create([FromBody] CreateAppointmentRequest request)
     {
         var response = await _mediator.Send(request);
         return Ok(response);
@@ -37,6 +37,7 @@ public class AppointmentController : MedFlowApiController
         return Ok(response);
     }
 
+
     [Authorize(Roles = "Admin, Receptionist")]
     [HttpGet]
 
@@ -49,5 +50,25 @@ public class AppointmentController : MedFlowApiController
         return Ok(response);
     }
 
+    [Authorize(Roles = "Admin,Receptionist,Doctor")]
+    [HttpGet("today")]
 
+    public async Task<IActionResult> GetTodayAppointments()
+    {
+        var request = new GetTodayAppointmentsRequest();
+        var response = await _mediator.Send(request);
+        return Ok(response);
+    }
+
+
+    [Authorize(Roles = "Admin,Doctor")]
+    [HttpPatch("{id}/status")]
+    public async Task<IActionResult> UpdateAppointmentStatus([FromRoute] Guid id, [FromBody] UpdateAppointmentStatusRequest request)
+    {
+
+        request.Id = id;
+        var response = await _mediator.Send(request);
+        return Ok(response);
+    }
 }
+

@@ -55,3 +55,4 @@ internal class CurrentUserService : ICurrentUserService
     }
 
 }
+

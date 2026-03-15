@@ -1,7 +1,8 @@
 ﻿
 using DataAccess.Internals;
 using Domain.Entities.Appointments;
-using Domain.Entities.DoctorSchedules;
+using Domain.Entities.Auth.Enums;
+using Domain.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repositories;
@@ -42,4 +43,25 @@ public sealed class SqlAppointmentRepository : BaseSqlRepository<Appointment>
             .DefaultIfEmpty()
             .MaxAsync(cancellationToken);
     }
+
+    public async Task<List<Appointment>> GetTodayAppointmentsAsync(Guid? userId, UserRoles role, CancellationToken cancellationToken = default)
+    {
+        //var today = new DateOnly(2026, 3, 12);
+
+        var today =  DateOnly.FromDateTime(DateTime.Today);
+
+        var query = DbContext.Appointments.Where(x => x.AppointmentDate == today);
+
+        if (role == UserRoles.Doctor)
+        {
+            var doctor = await DbContext.Doctors
+                .FirstOrDefaultAsync(x => x.UserId == userId, cancellationToken) ?? throw new NotFoundException("Doctor tapilmadi");
+
+            query = query.Where(x => x.DoctorId == doctor.Id);
+        }
+
+        return await query.ToListAsync(cancellationToken);
+
+    }
 }
+

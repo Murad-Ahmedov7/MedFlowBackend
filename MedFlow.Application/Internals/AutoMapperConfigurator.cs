@@ -8,6 +8,8 @@ using Application.Business.Doctors.Requests;
 using Application.Business.Doctors.Responses;
 using Application.Business.DoctorSchedules.Requests;
 using Application.Business.DoctorSchedules.Responses;
+using Application.Business.Examinations.Requests;
+using Application.Business.Examinations.Responses;
 using Application.Business.Patients.Requests;
 using Application.Business.Patients.Responses;
 using Application.Business.Users.Requests;
@@ -19,6 +21,7 @@ using Domain.Entities.Demo;
 using Domain.Entities.Departments;
 using Domain.Entities.Doctors;
 using Domain.Entities.DoctorSchedules;
+using Domain.Entities.Examinations;
 using Domain.Entities.Patients;
 
 namespace Application.Internals;
@@ -64,5 +67,17 @@ public sealed class AutoMapperConfigurator : Profile
 
         CreateMap<Appointment, AppointmentResponse>()
             .ForMember( dest => dest.DoctorName,opt => opt.MapFrom(src => src.Doctor.User.FullName));
+
+
+        CreateMap<Appointment, GetTodayAppointmentsResponse>();
+
+        CreateMap<UpdateAppointmentStatusRequest, Appointment>();
+        CreateMap<Appointment,UpdateAppointmentStatusResponse>();
+
+        CreateMap<CreateExaminationRequest,Examination>();
+        CreateMap<Examination, CreateExaminationResponse>();
+
+        CreateMap<Examination,GetExaminationByIdResponse>();
+    
     }
 }
