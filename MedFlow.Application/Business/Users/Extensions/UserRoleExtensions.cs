@@ -20,6 +20,4 @@ public static class UserRoleExtensions
                && allowedRoles.Contains(targetRole);
     }
 
-
 }
-

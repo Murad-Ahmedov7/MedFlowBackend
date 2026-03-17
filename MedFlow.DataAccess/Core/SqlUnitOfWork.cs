@@ -38,6 +38,8 @@ public sealed class SqlUnitOfWork
 
     private SqlExaminationRepository? _examinationRepository;
 
+    private SqlMedicineRepository? _medicineRepository;
+
     public SqlUnitOfWork(MedDbContext dbContext)
     {
         _dbContext = dbContext;
@@ -66,6 +68,8 @@ public sealed class SqlUnitOfWork
     public SqlAppointmentRepository AppointmentRepository => _appointmentRepository ??= new SqlAppointmentRepository(_dbContext);
 
     public SqlExaminationRepository ExaminationRepository => _examinationRepository ??= new SqlExaminationRepository(_dbContext);
+
+    public SqlMedicineRepository MedicineRepository => _medicineRepository ??= new SqlMedicineRepository(_dbContext);
 
 
 
