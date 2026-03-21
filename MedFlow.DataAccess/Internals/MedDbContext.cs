@@ -7,6 +7,7 @@ using Domain.Entities.DoctorSchedules;
 using Domain.Entities.Examinations;
 using Domain.Entities.Medicines;
 using Domain.Entities.Patients;
+using Domain.Entities.Prescriptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Internals;
@@ -50,6 +51,8 @@ public sealed class MedDbContext : DbContext
         modelBuilder.Entity<Examination>().HasQueryFilter(e => !e.IsDeleted);
 
         modelBuilder.Entity<Medicine>().HasQueryFilter(e => !e.IsDeleted);
+
+        modelBuilder.Entity<Prescription>().HasQueryFilter(e => !e.IsDeleted);
     }
 
     public DbSet<Category> Categories { get; set; }
@@ -71,6 +74,10 @@ public sealed class MedDbContext : DbContext
     public DbSet<Examination> Examinations { get; set; }
 
     public DbSet<Medicine> Medicines { get; set; }
+
+    public DbSet<Prescription> Prescriptions { get; set; }
+
+    public DbSet<PrescriptionItem> PrescriptionItems { get; set; }
 }
 
 

@@ -2,6 +2,7 @@
 
 using Domain.Entities.Appointments;
 using Domain.Entities.Base;
+using Domain.Entities.Prescriptions;
 
 
 namespace Domain.Entities.Examinations;
@@ -29,5 +30,7 @@ public class Examination : BaseEntity
     public decimal? Height { get; set; }
 
     public Appointment Appointment { get; set; } = null!;
+
+    public Prescription? Prescription { get; set; } 
 }
 

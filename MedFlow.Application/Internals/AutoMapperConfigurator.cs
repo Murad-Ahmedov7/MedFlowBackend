@@ -1,4 +1,4 @@
-using Application.Business.Appointments.Requests;
+﻿using Application.Business.Appointments.Requests;
 using Application.Business.Appointments.Responses;
 using Application.Business.Categories.Requests;
 using Application.Business.Categories.Responses;
@@ -14,6 +14,8 @@ using Application.Business.Medicines.Requests;
 using Application.Business.Medicines.Responses;
 using Application.Business.Patients.Requests;
 using Application.Business.Patients.Responses;
+using Application.Business.Prescriptions.Requests;
+using Application.Business.Prescriptions.Responses;
 using Application.Business.Users.Requests;
 using Application.Business.Users.Responses;
 using AutoMapper;
@@ -26,6 +28,7 @@ using Domain.Entities.DoctorSchedules;
 using Domain.Entities.Examinations;
 using Domain.Entities.Medicines;
 using Domain.Entities.Patients;
+using Domain.Entities.Prescriptions;
 
 namespace Application.Internals;
 
@@ -84,6 +87,20 @@ public sealed class AutoMapperConfigurator : Profile
 
         CreateMap<CreateMedicineRequest, Medicine>();
         CreateMap<Medicine, MedicineResponse>();
+
+        CreateMap<CreatePrescriptionRequest, Prescription>();
+        CreateMap<Prescription,PrescriptionResponse>();
+
+
+        CreateMap<Prescription, GetPrescriptionByIdResponse>();
+        CreateMap<Prescription, GetAllPrescriptionsResponse>();
+        CreateMap<PrescriptionItem, GetPrescriptionItemsResponse>();
+
+   
+        CreateMap<AddPrescriptionItemRequest,PrescriptionItem>();
+        CreateMap<PrescriptionItem, AddPrescriptionItemResponse>();
+       
+
 
     }
 }
