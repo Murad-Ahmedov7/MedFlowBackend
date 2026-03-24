@@ -1,6 +1,8 @@
+﻿
+
 using DataAccess.Internals;
-using Domain.Entities.Demo;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace DataAccess.Repositories;
 

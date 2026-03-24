@@ -4,6 +4,8 @@ using Application.Business.Categories.Requests;
 using Application.Business.Categories.Responses;
 using Application.Business.Departments.Requests;
 using Application.Business.Departments.Responses;
+using Application.Business.DepartmentServices.Requests;
+using Application.Business.DepartmentServices.Responses;
 using Application.Business.Doctors.Requests;
 using Application.Business.Doctors.Responses;
 using Application.Business.DoctorSchedules.Requests;
@@ -16,6 +18,8 @@ using Application.Business.Patients.Requests;
 using Application.Business.Patients.Responses;
 using Application.Business.Prescriptions.Requests;
 using Application.Business.Prescriptions.Responses;
+using Application.Business.Services.Requests;
+using Application.Business.Services.Responses;
 using Application.Business.Users.Requests;
 using Application.Business.Users.Responses;
 using AutoMapper;
@@ -23,12 +27,14 @@ using Domain.Entities.Appointments;
 using Domain.Entities.Auth;
 using Domain.Entities.Demo;
 using Domain.Entities.Departments;
+using Domain.Entities.DepartmentServices;
 using Domain.Entities.Doctors;
 using Domain.Entities.DoctorSchedules;
 using Domain.Entities.Examinations;
 using Domain.Entities.Medicines;
 using Domain.Entities.Patients;
 using Domain.Entities.Prescriptions;
+using Domain.Entities.Services;
 
 namespace Application.Internals;
 
@@ -89,17 +95,31 @@ public sealed class AutoMapperConfigurator : Profile
         CreateMap<Medicine, MedicineResponse>();
 
         CreateMap<CreatePrescriptionRequest, Prescription>();
-        CreateMap<Prescription,PrescriptionResponse>();
+        CreateMap<Prescription, PrescriptionResponse>();
 
 
         CreateMap<Prescription, GetPrescriptionByIdResponse>();
         CreateMap<Prescription, GetAllPrescriptionsResponse>();
         CreateMap<PrescriptionItem, GetPrescriptionItemsResponse>();
 
-   
-        CreateMap<AddPrescriptionItemRequest,PrescriptionItem>();
+
+        CreateMap<AddPrescriptionItemRequest, PrescriptionItem>();
         CreateMap<PrescriptionItem, AddPrescriptionItemResponse>();
-       
+
+
+        CreateMap<CreateServiceRequest, Service>();
+        CreateMap<Service, CreateServiceResponse>();
+
+        CreateMap<Service, ServiceResponse>();
+
+
+        CreateMap<CreateDepartmentServiceRequest, DepartmentService>();
+        CreateMap<DepartmentService, DepartmentServiceResponse>();
+
+        CreateMap<DepartmentService, GetServicesByDepartmentResponse>()
+            .ForMember(dest => dest.ServiceName, opt => opt.MapFrom(src => src.Service.Name))
+            .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.Service.ImageUrl))
+            .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.Service.CreatedAt));
 
 
     }
