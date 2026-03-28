@@ -22,4 +22,8 @@
     <ProjectReference Include="..\MedFlow.Domain\A.MedFlow.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Business\Payments\Queries\" />
+  </ItemGroup>
+
 </Project>

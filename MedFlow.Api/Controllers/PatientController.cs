@@ -1,4 +1,5 @@
-﻿using Application.Business.Patients.Requests;
+﻿using Application.Business.Invoices.Requests;
+using Application.Business.Patients.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +24,7 @@ public class PatientController : MedFlowApiController
         return Ok(response);
     }
 
+
     [HttpGet("by-fin/{fin}")]
     public async Task<IActionResult> GetByFin([FromRoute] string fin)
     {
@@ -40,12 +42,11 @@ public class PatientController : MedFlowApiController
     }
 
     [HttpGet("by-name")]
-    public async Task <IActionResult> GetByName([FromQuery] string? firstName, [FromQuery] string? lastName)
+    public async Task<IActionResult> GetByName([FromQuery] string? firstName, [FromQuery] string? lastName)
     {
         var request = new GetPatientsByNameRequest() { FirstName = firstName, LastName = lastName };
-        var response=await _mediator.Send(request);
+        var response = await _mediator.Send(request);
         return Ok(response);
     }
 
 }
-

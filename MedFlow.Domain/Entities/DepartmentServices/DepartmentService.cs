@@ -1,5 +1,4 @@
 ﻿
-
 using Domain.Entities.Departments;
 using Domain.Entities.Services;
 
@@ -20,5 +19,4 @@ public class DepartmentService
     public Department Department { get; set; } = null!;
 
     public Service Service { get; set; } = null!;
-
 }

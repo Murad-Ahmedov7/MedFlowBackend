@@ -12,8 +12,7 @@ using Domain.ResponseModel;
 
 namespace Application.Business.Prescriptions.Commands;
 
-
-public sealed class AddPrescriptionItemCommand : SysRequestHandler<AddPrescriptionItemRequest, Result<AddPrescriptionItemResponse>>
+internal sealed class AddPrescriptionItemCommand : SysRequestHandler<AddPrescriptionItemRequest, Result<AddPrescriptionItemResponse>>
 {
     private readonly SqlUnitOfWork _sqlUnitOfWork;
     private readonly IMapper _mapper;

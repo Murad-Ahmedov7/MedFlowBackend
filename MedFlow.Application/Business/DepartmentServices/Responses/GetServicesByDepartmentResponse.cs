@@ -1,11 +1,9 @@
 ﻿
-
-
 namespace Application.Business.DepartmentServices.Responses;
 
 public class GetServicesByDepartmentResponse
 {
-    public Guid ServiceId { get; set; }
+    public Guid DepartmentServiceId { get; set; }
 
     public string ServiceName { get; set; } = null!;
 

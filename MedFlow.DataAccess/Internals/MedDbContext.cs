@@ -1,5 +1,7 @@
 ﻿using Domain.Entities.Appointments;
 using Domain.Entities.Auth;
+using Domain.Entities.Billing.Invoices;
+using Domain.Entities.Billing.Payments;
 using Domain.Entities.Demo;
 using Domain.Entities.Departments;
 using Domain.Entities.DepartmentServices;
@@ -57,6 +59,12 @@ public sealed class MedDbContext : DbContext
         modelBuilder.Entity<Prescription>().HasQueryFilter(e => !e.IsDeleted);
 
         modelBuilder.Entity<Service>().HasQueryFilter(e => !e.IsDeleted);
+
+        modelBuilder.Entity<Invoice>().HasQueryFilter(e => !e.IsDeleted);
+
+        modelBuilder.Entity<InvoiceItem>().HasQueryFilter(e => !e.IsDeleted);
+
+        modelBuilder.Entity<Payment>().HasQueryFilter(e => !e.IsDeleted);
     }
 
     public DbSet<Category> Categories { get; set; }
@@ -86,6 +94,12 @@ public sealed class MedDbContext : DbContext
     public DbSet<Service> Services { get; set; }
 
     public DbSet<DepartmentService> DepartmentServices { get; set; }
+
+    public DbSet<Invoice> Invoices { get; set; }
+
+    public DbSet<InvoiceItem> InvoiceItems { get; set; }
+
+    public DbSet<Payment> Payments { get; set; }
 }
 
 

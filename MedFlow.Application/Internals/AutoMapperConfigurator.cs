@@ -12,10 +12,13 @@ using Application.Business.DoctorSchedules.Requests;
 using Application.Business.DoctorSchedules.Responses;
 using Application.Business.Examinations.Requests;
 using Application.Business.Examinations.Responses;
+using Application.Business.Invoices.Requests;
+using Application.Business.Invoices.Responses;
 using Application.Business.Medicines.Requests;
 using Application.Business.Medicines.Responses;
 using Application.Business.Patients.Requests;
 using Application.Business.Patients.Responses;
+using Application.Business.Payments.Responses;
 using Application.Business.Prescriptions.Requests;
 using Application.Business.Prescriptions.Responses;
 using Application.Business.Services.Requests;
@@ -25,6 +28,8 @@ using Application.Business.Users.Responses;
 using AutoMapper;
 using Domain.Entities.Appointments;
 using Domain.Entities.Auth;
+using Domain.Entities.Billing.Invoices;
+using Domain.Entities.Billing.Payments;
 using Domain.Entities.Demo;
 using Domain.Entities.Departments;
 using Domain.Entities.DepartmentServices;
@@ -63,6 +68,9 @@ public sealed class AutoMapperConfigurator : Profile
         CreateMap<CreatePatientRequest, Patient>();
 
         CreateMap<Patient, PatientResponse>();
+
+        CreateMap<Patient, PatientInfoResponse>()
+            .ForMember(dest => dest.Fullname, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName));
 
 
         CreateMap<CreateDepartmentRequest, Department>();
@@ -117,10 +125,26 @@ public sealed class AutoMapperConfigurator : Profile
         CreateMap<DepartmentService, DepartmentServiceResponse>();
 
         CreateMap<DepartmentService, GetServicesByDepartmentResponse>()
+            .ForMember(dest => dest.DepartmentServiceId, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.ServiceName, opt => opt.MapFrom(src => src.Service.Name))
             .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.Service.ImageUrl))
             .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.Service.CreatedAt));
 
+
+        CreateMap<CreateInvoiceRequest, Invoice>();
+        CreateMap<Invoice, CreateInvoiceResponse>();
+
+
+        CreateMap<Invoice, PatientInvoiceResponse>();
+
+        CreateMap<Invoice, InvoiceResponse>()
+            .ForMember(dest => dest.RemainingAmount, opt => opt.MapFrom(src => src.TotalAmount - src.PaidAmount));
+
+
+
+        CreateMap<InvoiceItem, InvoiceItemResponse>();
+
+        CreateMap<Payment, PaymentResponse>();
 
     }
 }
