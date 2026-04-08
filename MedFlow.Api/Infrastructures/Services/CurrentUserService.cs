@@ -33,7 +33,7 @@ internal class CurrentUserService : ICurrentUserService
         return _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value;
     }
 
-    public UserRoles GetCurrentUserRoleOrThrow()
+    public UserRole GetCurrentUserRoleOrThrow()
     {
         var roleClaim = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Role)?.Value;
 
@@ -42,7 +42,7 @@ internal class CurrentUserService : ICurrentUserService
             throw new UnauthorizedAccessException("User role claim not found");
         }
 
-        if(!Enum.TryParse<UserRoles>(roleClaim,true,out var role))
+        if(!Enum.TryParse<UserRole>(roleClaim,true,out var role))
         {
             throw new UnauthorizedAccessException("Invalid User Role");
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.Business.Users.Responses;
 
-public class LoginUserResponse
+public class SignInUserResponse
 {
     public string Token { get; set; } = string.Empty;
 

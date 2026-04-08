@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Application.Business.Users.Requests;
 
-public record class RegisterUserRequest : IRequest<Result<RegisterUserResponse>>
+public record class     SignUpUserRequest : IRequest<Result<SignUpUserResponse>>
 {
     public string FullName { get; set; } = string.Empty;
 
@@ -13,7 +13,7 @@ public record class RegisterUserRequest : IRequest<Result<RegisterUserResponse>>
 
     public string Phone { get; set; } = string.Empty;
 
-    public UserRoles UserRole { get; set; }
+    public string UserRole { get; set; } = string.Empty;
 
     public string Password { get; set; } = string.Empty;
 

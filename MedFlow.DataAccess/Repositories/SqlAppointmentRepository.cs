@@ -44,7 +44,7 @@ public sealed class SqlAppointmentRepository : BaseSqlRepository<Appointment>
             .MaxAsync(cancellationToken);
     }
 
-    public async Task<List<Appointment>> GetTodayAppointmentsAsync(Guid? userId, UserRoles role, CancellationToken cancellationToken = default)
+    public async Task<List<Appointment>> GetTodayAppointmentsAsync(Guid? userId, UserRole role, CancellationToken cancellationToken = default)
     {
         //var today = new DateOnly(2026, 3, 12);
 
@@ -52,7 +52,7 @@ public sealed class SqlAppointmentRepository : BaseSqlRepository<Appointment>
 
         var query = DbContext.Appointments.Where(x => x.AppointmentDate == today);
 
-        if (role == UserRoles.Doctor)
+        if (role == UserRole.Doctor)
         {
             var doctor = await DbContext.Doctors
                 .FirstOrDefaultAsync(x => x.UserId == userId, cancellationToken) ?? throw new NotFoundException("Doctor tapilmadi");

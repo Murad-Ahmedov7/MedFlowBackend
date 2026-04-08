@@ -58,12 +58,12 @@ public sealed class AutoMapperConfigurator : Profile
         CreateMap<Category, GetCategoryByIdResponse>();
         CreateMap<Category, GetAllCategoriesResponse>();
 
-        CreateMap<RegisterUserRequest, User>();
-        CreateMap<User, RegisterUserResponse>();
+        CreateMap<SignUpUserRequest, User>();
+        CreateMap<User, SignUpUserResponse>();
 
 
-        CreateMap<LoginUserRequest, User>();
-        CreateMap<User, LoginUserResponse>();
+        CreateMap<SignInUserRequest, User>();
+        CreateMap<User, SignInUserResponse>();
 
         CreateMap<CreatePatientRequest, Patient>();
 

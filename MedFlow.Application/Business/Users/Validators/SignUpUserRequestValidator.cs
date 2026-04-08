@@ -1,12 +1,13 @@
 ﻿
 using Application.Business.Users.Requests;
+using Domain.Entities.Auth.Enums;
 using FluentValidation;
 
 namespace Application.Business.Users.Validators;
 
-public sealed class RegisterUserRequestValidator : AbstractValidator<RegisterUserRequest>
+public sealed class SignUpUserRequestValidator : AbstractValidator<SignUpUserRequest>
 {
-    public RegisterUserRequestValidator()
+    public SignUpUserRequestValidator()
     {
         RuleFor(x => x.FullName)
             .NotEmpty()
@@ -23,6 +24,11 @@ public sealed class RegisterUserRequestValidator : AbstractValidator<RegisterUse
             .MaximumLength(20)
             .Must(p => p.Count(char.IsDigit) >= 9 && p.Count(char.IsDigit) <= 15)
             .Matches(@"^[0-9+\-\s()]+$");
+
+        RuleFor(x => x.UserRole)
+            .NotEmpty().WithMessage("Role is required")
+            .Must(role => Enum.TryParse<UserRole>(role, true, out _))
+            .WithMessage("Invalid role");
 
         RuleFor(x => x.Password)
             .NotEmpty()

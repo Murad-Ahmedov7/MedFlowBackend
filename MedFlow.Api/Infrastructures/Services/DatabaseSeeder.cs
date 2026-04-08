@@ -19,7 +19,7 @@ public class DatabaseSeeder
 
     public async Task SeedAsync()
     {
-        var adminExists = await _dbContext.Users.AnyAsync(u => u.UserRole == UserRoles.Admin && !u.IsDeleted);
+        var adminExists = await _dbContext.Users.AnyAsync(u => u.UserRole == UserRole.Admin && !u.IsDeleted);
 
         if (adminExists)
             return;
@@ -30,7 +30,7 @@ public class DatabaseSeeder
             Email = "Admin1@gmail.com",
             Phone = "055-342-34-12",
             PasswordHash = Argon2.Hash("murad1234"),
-            UserRole = UserRoles.Admin,
+            UserRole = UserRole.Admin,
             CreatedAt = DateTime.UtcNow,
             CreatedBy = null,
             IsDeleted = false

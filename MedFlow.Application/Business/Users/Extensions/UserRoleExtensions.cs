@@ -5,16 +5,16 @@ namespace Application.Business.Users.Extensions;
 
 public static class UserRoleExtensions
 {
-    private static readonly Dictionary<UserRoles, UserRoles[]> CreatePermissions = new Dictionary<UserRoles, UserRoles[]>()
+    private static readonly Dictionary<UserRole, UserRole[]> CreatePermissions = new Dictionary<UserRole, UserRole[]>()
     {
         //{UserRoles.Admin,new UserRoles[] {UserRoles.Admin,UserRoles.Receptionist,UserRoles.Patient,UserRoles.Doctor}},
 
-        {UserRoles.Admin,new UserRoles[] {UserRoles.Receptionist,UserRoles.Doctor}},
+        {UserRole.Admin,new UserRole[] {UserRole.Receptionist,UserRole.Doctor}},
 
-        {UserRoles.Receptionist,new UserRoles[] {UserRoles.Patient} }
+        {UserRole.Receptionist,new UserRole[] {UserRole.Patient} }
     };
 
-    public static bool CanCreate( this UserRoles currentRole, UserRoles targetRole)
+    public static bool CanCreate( this UserRole currentRole, UserRole targetRole)
     {
         return CreatePermissions.TryGetValue(currentRole, out var allowedRoles)
                && allowedRoles.Contains(targetRole);

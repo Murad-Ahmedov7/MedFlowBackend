@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Application.Business.Users.Validators;
-public sealed class LoginUserRequestValidator:AbstractValidator<LoginUserRequest>
+public sealed class SignInUserRequestValidator:AbstractValidator<SignInUserRequest>
 {
-    public LoginUserRequestValidator()
+    public SignInUserRequestValidator()
     {
         RuleFor(x=>x.Email).NotEmpty().EmailAddress().MaximumLength(255);
         RuleFor(x=>x.Password).NotEmpty().MinimumLength(8).MaximumLength(255);

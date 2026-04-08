@@ -1,27 +1,20 @@
 ﻿
-
-using Application.Business.Users.Requests;
 using Application.Business.Users.Responses;
 using Application.Infrastructure;
 using DataAccess.Core;
-using Domain.Entities;
 using Domain.Entities.Auth;
 using Domain.ResponseModel;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Security.Cryptography;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
 namespace Application.Business.Users.Commands;
 
 
-internal sealed class LoginUserWithRefreshTokenCommand : SysRequestHandler<RefreshTokenRequest, Result<LoginUserResponse>>
+internal sealed class RefreshTokenCommand : SysRequestHandler<RefreshTokenRequest, Result<SignInUserResponse>>
 {
 
     private readonly ITokenProvider _tokenProvider;
     private readonly SqlUnitOfWork _sqlUnitOfWork;
     private readonly ICurrentUserService _currentUserService;
 
-    public LoginUserWithRefreshTokenCommand(ITokenProvider tokenProvider, SqlUnitOfWork sqlUnitOfWork, ICurrentUserService currentUserService)
+    public RefreshTokenCommand(ITokenProvider tokenProvider, SqlUnitOfWork sqlUnitOfWork, ICurrentUserService currentUserService)
         : base(currentUserService)
     {
         _tokenProvider = tokenProvider;
@@ -29,20 +22,20 @@ internal sealed class LoginUserWithRefreshTokenCommand : SysRequestHandler<Refre
         _currentUserService = currentUserService;
     }
 
-    public override async Task<Result<LoginUserResponse>> Handle(RefreshTokenRequest request, CancellationToken cancellationToken)
+    public override async Task<Result<SignInUserResponse>> Handle(RefreshTokenRequest request, CancellationToken cancellationToken)
     {
         var tokenResult = await _sqlUnitOfWork.AuthRepository.GetByTokenAsync(request.RefreshToken, cancellationToken);
 
-        if (tokenResult is null || tokenResult.ExpiresOnUtc < DateTime.UtcNow  ||tokenResult.AbsoluteExpiresOnUtc<DateTime.UtcNow)
+        if (tokenResult is null || tokenResult.ExpiresOnUtc < DateTime.UtcNow || tokenResult.AbsoluteExpiresOnUtc < DateTime.UtcNow)
         {
-            return new Result<LoginUserResponse>(["Invalid or expired refresh token."]);
-           
+            return new Result<SignInUserResponse>(["Invalid or expired refresh token."]);
+
         }
 
-        _sqlUnitOfWork.AuthRepository.Delete(tokenResult); 
+        _sqlUnitOfWork.AuthRepository.Delete(tokenResult);
 
-        var accessToken= _tokenProvider.GenerateAccessToken(tokenResult.User);
-       var refreshToken = _tokenProvider.GenerateRefreshToken();
+        var accessToken = _tokenProvider.GenerateAccessToken(tokenResult.User);
+        var refreshToken = _tokenProvider.GenerateRefreshToken();
 
         _sqlUnitOfWork.AuthRepository.Add(new RefreshToken
         {
@@ -54,13 +47,13 @@ internal sealed class LoginUserWithRefreshTokenCommand : SysRequestHandler<Refre
 
         await _sqlUnitOfWork.SaveChangesAsync();
 
-        var response = new LoginUserResponse
+        var response = new SignInUserResponse
         {
             Token = accessToken,
             RefreshToken = refreshToken
         };
 
-        return new Result<LoginUserResponse>
+        return new Result<SignInUserResponse>
         {
             Data = response
         };

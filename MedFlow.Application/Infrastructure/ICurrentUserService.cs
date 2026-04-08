@@ -12,6 +12,6 @@ public interface ICurrentUserService
     Guid? GetCurrentUserId();
     Guid GetCurrentUserIdOrThrow();
     string? GetCurrentUserEmail();
-    UserRoles GetCurrentUserRoleOrThrow();
+    UserRole GetCurrentUserRoleOrThrow();
     bool IsAuthenticated();
 }

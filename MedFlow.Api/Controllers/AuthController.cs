@@ -1,4 +1,4 @@
-﻿using Application.Business.Categories.Requests;
+﻿
 using Application.Business.Users.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -18,16 +18,17 @@ public class AuthController : MedFlowApiController
     }
 
     [Authorize(Roles = "Admin,Receptionist")]
-    [HttpPost("register")]
-    public async Task<IActionResult> Create([FromBody] RegisterUserRequest request)
+    [HttpPost("sign-up")]
+    public async Task<IActionResult> SignUp([FromBody] SignUpUserRequest request)
     {
         var response = await _mediator.Send(request);
+
         return Ok(response);
     }
 
 
-    [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginUserRequest request)
+    [HttpPost("sign-in")]
+    public async Task<IActionResult> SignIn([FromBody] SignInUserRequest request)
     {
         var response = await _mediator.Send(request);
 

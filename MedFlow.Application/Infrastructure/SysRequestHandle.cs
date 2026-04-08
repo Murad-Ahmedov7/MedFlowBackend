@@ -42,7 +42,7 @@ public abstract class SysRequestHandler<TRequest, TResponse> : IRequestHandler<T
         return CurrentUserService?.GetCurrentUserId();
     }
 
-    protected UserRoles GetCurrentUserRoleOrThrow()
+    protected UserRole GetCurrentUserRoleOrThrow()
     {
         return CurrentUserService.GetCurrentUserRoleOrThrow();
     }

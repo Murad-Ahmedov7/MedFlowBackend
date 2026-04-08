@@ -6,26 +6,27 @@ using Application.Infrastructure;
 using AutoMapper;
 using DataAccess.Core;
 using Domain.Entities.Auth;
+using Domain.Entities.Auth.Enums;
 using Domain.Exceptions;
 using Domain.ResponseModel;
 using Isopoh.Cryptography.Argon2;
 
 namespace Application.Business.Users.Commands;
 
-internal sealed class RegisterUserCommand : SysRequestHandler<RegisterUserRequest, Result<RegisterUserResponse>>
+internal sealed class SignUpUserCommand : SysRequestHandler<SignUpUserRequest, Result<SignUpUserResponse>>
 {
     private readonly SqlUnitOfWork _sqlUnitOfWork;
 
     private readonly IMapper _mapper;
 
-    public RegisterUserCommand(SqlUnitOfWork sqlUnitOfWork, IMapper mapper, ICurrentUserService currentUserService)
+    public SignUpUserCommand(SqlUnitOfWork sqlUnitOfWork, IMapper mapper, ICurrentUserService currentUserService)
         : base(currentUserService)
     {
         _sqlUnitOfWork = sqlUnitOfWork;
         _mapper = mapper;
     }
 
-    public override async Task<Result<RegisterUserResponse>> Handle(RegisterUserRequest request, CancellationToken cancellationToken)
+    public override async Task<Result<SignUpUserResponse>> Handle(SignUpUserRequest request, CancellationToken cancellationToken)
     {
         var emailExists = await _sqlUnitOfWork.UserRepository.GetByEmailAsync(request.Email, cancellationToken);
 
@@ -36,9 +37,9 @@ internal sealed class RegisterUserCommand : SysRequestHandler<RegisterUserReques
 
         var currentRole = GetCurrentUserRoleOrThrow();
 
+        Enum.TryParse<UserRole>(request.UserRole, true, out var targetRole);
 
-
-        if (!currentRole.CanCreate(request.UserRole))
+        if (!currentRole.CanCreate(targetRole))
         {
             throw new ForbiddenException("You are not allowed to create this role.");
         }
@@ -54,9 +55,9 @@ internal sealed class RegisterUserCommand : SysRequestHandler<RegisterUserReques
         _sqlUnitOfWork.UserRepository.Add(newUser);
         await _sqlUnitOfWork.SaveChangesAsync();
 
-        var response = _mapper.Map<RegisterUserResponse>(newUser);
+        var response = _mapper.Map<SignUpUserResponse>(newUser);
 
-        return new Result<RegisterUserResponse>
+        return new Result<SignUpUserResponse>
         {
             Data = response
         };

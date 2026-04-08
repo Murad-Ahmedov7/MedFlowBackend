@@ -10,19 +10,19 @@ using Isopoh.Cryptography.Argon2;
 
 namespace Application.Business.Users.Commands
 {
-    internal sealed class LoginUserCommand : SysRequestHandler<LoginUserRequest, Result<LoginUserResponse>>
+    internal sealed class SignInUserCommand : SysRequestHandler<SignInUserRequest, Result<SignInUserResponse>>
     {
         private readonly SqlUnitOfWork _sqlUnitOfWork;
         private readonly ITokenProvider _tokenProvider;
 
-        public LoginUserCommand(SqlUnitOfWork sqlUnitOfWork, ICurrentUserService currentUserService,ITokenProvider tokenProvider)
+        public SignInUserCommand(SqlUnitOfWork sqlUnitOfWork, ICurrentUserService currentUserService,ITokenProvider tokenProvider)
             : base(currentUserService)
         {
             _sqlUnitOfWork = sqlUnitOfWork;
             _tokenProvider = tokenProvider;
         }
 
-        public override async Task<Result<LoginUserResponse>> Handle(LoginUserRequest request, CancellationToken cancellationToken)
+        public override async Task<Result<SignInUserResponse>> Handle(SignInUserRequest request, CancellationToken cancellationToken)
         {
             var user = await _sqlUnitOfWork.UserRepository.GetByEmailAsync(request.Email,cancellationToken);
 
@@ -33,7 +33,7 @@ namespace Application.Business.Users.Commands
 
             if (user == null || string.IsNullOrEmpty(user.PasswordHash))
             {
-                return new Result<LoginUserResponse>(["Invalid email or password."]);
+                return new Result<SignInUserResponse>(["Invalid email or password."]);
             }
 
             var isPasswordValid = Argon2.Verify(user.PasswordHash, request.Password);
@@ -41,7 +41,7 @@ namespace Application.Business.Users.Commands
 
             if (!isPasswordValid)
             {
-                return new Result<LoginUserResponse>(["Invalid email or password."]);
+                return new Result<SignInUserResponse>(["Invalid email or password."]);
             }
 
 
@@ -73,7 +73,7 @@ namespace Application.Business.Users.Commands
 
             await _sqlUnitOfWork.SaveChangesAsync();
 
-            var response = new LoginUserResponse
+            var response = new SignInUserResponse
             {
                 Token = token,
                 RefreshToken = refreshToken
@@ -81,7 +81,7 @@ namespace Application.Business.Users.Commands
 
 
 
-            return new Result<LoginUserResponse>
+            return new Result<SignInUserResponse>
             {
                 Data = response
             };
