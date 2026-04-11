@@ -13,6 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSqlServerServices(connectionString!);
 builder.Services.AddApplicationServices();
 builder.Services.AddJwtAuthentication(builder.Configuration);
+builder.Services.AddCorsServices(builder.Configuration);
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<ITokenProvider, TokenProvider>();
@@ -40,6 +41,7 @@ if (app.Environment.IsDevelopment())
 await app.SeedDatabaseAsnyc();
 
 app.UseHttpsRedirection();
+app.UseCors("AllowFrontend");
 app.UseExceptionHandling();
 app.UseAuthentication();    
 app.UseAuthorization();
