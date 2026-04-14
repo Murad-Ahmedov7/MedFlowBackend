@@ -41,7 +41,7 @@ internal sealed class SignUpUserCommand : SysRequestHandler<SignUpUserRequest, R
 
         if (!currentRole.CanCreate(targetRole))
         {
-            throw new ForbiddenException("You are not allowed to create this role.");
+            throw new ForbiddenException($"Role '{currentRole}' is not permitted to create '{targetRole}'.");
         }
 
         var passwordHash = Argon2.Hash(request.Password);
