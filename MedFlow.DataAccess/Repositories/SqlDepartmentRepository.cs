@@ -11,6 +11,5 @@ public sealed class SqlDepartmentRepository : BaseSqlRepository<Department>
     {
 
     }
+
 }
-
-

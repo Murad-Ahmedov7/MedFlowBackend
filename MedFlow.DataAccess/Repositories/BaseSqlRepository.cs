@@ -1,10 +1,12 @@
 ﻿
 
 using DataAccess.Internals;
+using Domain.Entities.Base;
 using Microsoft.EntityFrameworkCore;
 
 
 namespace DataAccess.Repositories;
+
 
 public abstract class BaseSqlRepository<T> where T : class
 {
@@ -27,6 +29,16 @@ public abstract class BaseSqlRepository<T> where T : class
     public void Update(T entity)
     {
         DbContext.Set<T>().Update(entity);
+    }
+
+    public void Delete(T entity)
+    {
+        if (entity is BaseEntity baseEntity)
+        {
+            baseEntity.IsDeleted = true;
+            DbContext.Set<T>().Update(entity);
+        }
+      
     }
 
     public async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
