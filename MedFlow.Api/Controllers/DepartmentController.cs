@@ -1,8 +1,6 @@
 ﻿
 using Application.Business.Departments.Requests;
 using Application.Business.DepartmentServices.Requests;
-using AutoMapper.Features;
-using Domain.Entities.Departments;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -87,4 +85,3 @@ namespace MedFlow.Api.Controllers
 
     }
 }
-

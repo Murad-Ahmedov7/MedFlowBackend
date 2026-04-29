@@ -1,8 +1,6 @@
 ﻿
 
 using Application.Business.Doctors.Requests;
-
-
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -37,4 +35,3 @@ public class DoctorController : MedFlowApiController
         return Ok(response);
     }
 }
-

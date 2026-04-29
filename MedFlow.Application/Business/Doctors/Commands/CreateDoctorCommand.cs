@@ -1,16 +1,21 @@
 ﻿
 
-using Application.Business.Doctors.Requests;
+using Application.Business.Doctors.Requests; 
 using Application.Business.Doctors.Responses;
+using Application.Business.Users.Extensions;
 using Application.Infrastructure;
 using AutoMapper;
 using DataAccess.Core;
+using Domain.Entities.Auth;
+using Domain.Entities.Auth.Enums;
 using Domain.Entities.Doctors;
+using Domain.Exceptions;
 using Domain.ResponseModel;
+using Isopoh.Cryptography.Argon2;
 
 namespace Application.Business.Doctors.Commands;
 
-internal sealed class CreateDoctorCommand : SysRequestHandler<CreateDoctorRequest, Result<DoctorResponse>>
+internal sealed class CreateDoctorCommand : SysRequestHandler<CreateDoctorRequest, Result<CreateDoctorResponse>>
 {
     private readonly SqlUnitOfWork _sqlUnitOfWork;
 
@@ -24,26 +29,61 @@ internal sealed class CreateDoctorCommand : SysRequestHandler<CreateDoctorReques
         _mapper = mapper;
     }
 
-    public override async Task<Result<DoctorResponse>> Handle(CreateDoctorRequest request, CancellationToken cancellationToken)
+    public override async Task<Result<CreateDoctorResponse>> Handle(CreateDoctorRequest request, CancellationToken cancellationToken)
     {
-        var user = await _sqlUnitOfWork.UserRepository.GetByIdAsync(request.UserId,cancellationToken);
-        ThrowNotFoundIfNull(user, "User tapılmadı");
+        var emailExists = await _sqlUnitOfWork.UserRepository.GetByEmailAsync(request.Email, cancellationToken);
 
-        var department = await _sqlUnitOfWork.DepartmentRepository.GetByIdAsync(request.DepartmentId,cancellationToken);
-        ThrowNotFoundIfNull(department, "Departament tapılmadı");
+        if (emailExists != null) throw new ConflictException("Email already exists.");
 
-        var newDoctor = _mapper.Map<Doctor>(request);
+        var departmentExists = await _sqlUnitOfWork.DepartmentRepository.GetByIdAsync(request.DepartmentId, cancellationToken);
 
-        newDoctor.CreatedAt = DateTime.UtcNow;
+        ThrowNotFoundIfNull(departmentExists, "Department not found.");
 
-        newDoctor.CreatedBy = GetCurrentUserIdOrThrow();
 
-        _sqlUnitOfWork.DoctorRepository.Add(newDoctor);
+        var currentRole = GetCurrentUserRoleOrThrow();
+
+        var targetRole = UserRole.Doctor;
+
+        if (!currentRole.CanCreate(targetRole)) throw new ForbiddenException($"Role '{currentRole}' is not permitted to create '{targetRole}'.");
+
+        var passwordHash = Argon2.Hash(request.Password);
+
+        var user = new User
+        {
+            FullName = request.FullName,
+            Email = request.Email,
+            Phone = request.Phone,
+            UserRole = targetRole,
+            PasswordHash = passwordHash,
+            CreatedAt = DateTime.UtcNow,
+            CreatedBy = GetCurrentUserIdOrThrow()
+        };
+
+        //_sqlUnitOfWork.UserRepository.Add(user);
+        //await _sqlUnitOfWork.SaveChangesAsync();
+
+
+        var doctor = new Doctor
+        {
+            //UserId = user.Id,
+            User = user,
+            DepartmentId = request.DepartmentId,
+            Specialty = request.Specialty,
+            ImageUrl = request.ImageUrl,
+            CreatedAt = DateTime.UtcNow,
+            CreatedBy = GetCurrentUserIdOrThrow()
+        };
+        //_sqlUnitOfWork.UserRepository.Add(user);
+        _sqlUnitOfWork.DoctorRepository.Add(doctor);
+
         await _sqlUnitOfWork.SaveChangesAsync();
 
-        var result = _mapper.Map<DoctorResponse>(newDoctor);
+        var response = new CreateDoctorResponse
+        {
+            Id = doctor.Id
+        };
 
-        return new Result<DoctorResponse> { Data = result };
+        return new Result<CreateDoctorResponse> { Data = response };
 
     }
 
