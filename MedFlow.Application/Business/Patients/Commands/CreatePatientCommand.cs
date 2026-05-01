@@ -9,7 +9,7 @@ using Domain.ResponseModel;
 
 namespace Application.Business.Patients.Commands;
 
-internal sealed class CreatePatientCommand : SysRequestHandler<CreatePatientRequest, Result<PatientResponse>>
+internal sealed class CreatePatientCommand : SysRequestHandler<CreatePatientRequest, Result<CreatePatientResponse>>
 {
     private readonly SqlUnitOfWork _sqlUnitOfWork;
 
@@ -24,15 +24,22 @@ internal sealed class CreatePatientCommand : SysRequestHandler<CreatePatientRequ
     }
 
 
-    public override async Task<Result<PatientResponse>> Handle(CreatePatientRequest request, CancellationToken cancellationToken)
+    public override async Task<Result<CreatePatientResponse>> Handle(CreatePatientRequest request, CancellationToken cancellationToken)
     {
         var newPatient = _mapper.Map<Patient>(request);
+
         newPatient.CreatedAt = DateTime.UtcNow;
+
         newPatient.CreatedBy = GetCurrentUserIdOrThrow();
+
         _sqlUnitOfWork.PatientRepository.Add(newPatient);
+
         await _sqlUnitOfWork.SaveChangesAsync();
-        var mappedNewPatient = _mapper.Map<PatientResponse>(newPatient);
-        return new Result<PatientResponse> { Data = mappedNewPatient };
+
+        var mappedNewPatient = _mapper.Map<CreatePatientResponse>(newPatient);
+
+        return new Result<CreatePatientResponse> { Data = mappedNewPatient };
+
     }
 
 

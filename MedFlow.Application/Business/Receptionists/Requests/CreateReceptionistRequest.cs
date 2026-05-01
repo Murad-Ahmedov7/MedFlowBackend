@@ -1,11 +1,11 @@
 ﻿
-using Application.Business.Users.Responses;
+using Application.Business.Receptionists.Responses;
 using Domain.ResponseModel;
 using MediatR;
 
-namespace Application.Business.Users.Requests;
+namespace Application.Business.Receptionists.Requests;
 
-public record class SignUpUserRequest : IRequest<Result<SignUpUserResponse>>
+public record class CreateReceptionistRequest:IRequest<Result<CreateReceptionistResponse>>
 {
     public string FullName { get; set; } = string.Empty;
 
@@ -13,10 +13,9 @@ public record class SignUpUserRequest : IRequest<Result<SignUpUserResponse>>
 
     public string Phone { get; set; } = string.Empty;
 
-    public string UserRole { get; set; } = string.Empty;
-
     public string Password { get; set; } = string.Empty;
 
     public string ConfirmPassword { get; set; } = string.Empty;
-
 }
+
+

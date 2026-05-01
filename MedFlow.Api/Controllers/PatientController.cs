@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MedFlow.Api.Controllers;
 
-[Route("api/patient")]
+[Route("api/patients")]
 [ApiController]
 public class PatientController : MedFlowApiController
 {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Business.Patients.Requests;
 
-public record class CreatePatientRequest:IRequest<Result<PatientResponse>>
+public record class CreatePatientRequest:IRequest<Result<CreatePatientResponse>>
 {
     public string FirstName { get; set; }=string.Empty;
 

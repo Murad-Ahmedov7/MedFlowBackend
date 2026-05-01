@@ -21,6 +21,8 @@ using Application.Business.Patients.Responses;
 using Application.Business.Payments.Responses;
 using Application.Business.Prescriptions.Requests;
 using Application.Business.Prescriptions.Responses;
+using Application.Business.Receptionists.Requests;
+using Application.Business.Receptionists.Responses;
 using Application.Business.Services.Requests;
 using Application.Business.Services.Responses;
 using Application.Business.Users.Requests;
@@ -61,11 +63,16 @@ public sealed class AutoMapperConfigurator : Profile
         CreateMap<SignUpUserRequest, User>();
         CreateMap<User, SignUpUserResponse>();
 
+        CreateMap<CreateReceptionistRequest,User>();
+        CreateMap<User,CreateReceptionistResponse>();
+
 
         CreateMap<SignInUserRequest, User>();
         CreateMap<User, SignInUserResponse>();
 
         CreateMap<CreatePatientRequest, Patient>();
+
+        CreateMap<Patient, CreatePatientResponse>();
 
         CreateMap<Patient, PatientResponse>();
 
