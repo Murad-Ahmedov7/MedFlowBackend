@@ -1,6 +1,6 @@
 ﻿
 using Application.Business.Departments.Requests;
-using Application.Business.DepartmentServices.Requests;
+using Application.Business.Services.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +35,17 @@ namespace MedFlow.Api.Controllers
             return Ok(response);
         }
 
+
+        [Authorize(Roles = "Admin,Receptionist")]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
+            var request = new GetDepartmentByIdRequest { Id = id };
+            var response = await _mediator.Send(request);
+            return Ok(response);
+        }
+
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateDepartmentRequest request)
         {
@@ -43,7 +54,7 @@ namespace MedFlow.Api.Controllers
             return Ok(response);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
 
         public async Task<IActionResult> Delete([FromRoute] Guid id)
@@ -56,29 +67,9 @@ namespace MedFlow.Api.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost("{id}/services")]
-        public async Task<IActionResult> AddDepartmentService(Guid id, [FromBody] CreateDepartmentServiceRequest request)
+        public async Task<IActionResult> AddDepartmentService(Guid id, [FromBody] CreateServiceForDepartmentRequest request)
         {
             request.DepartmentId = id;
-            var response = await _mediator.Send(request);
-            return Ok(response);
-        }
-
-
-
-        [Authorize(Roles = "Admin,Receptionist")]
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById([FromRoute] Guid id)
-        {
-            var request = new GetDepartmentByIdRequest { Id = id };
-            var response = await _mediator.Send(request);
-            return Ok(response);
-        }
-
-        [Authorize]
-        [HttpGet("{id}/services")]
-        public async Task<IActionResult> GetServicesByDepartmentId(Guid id)
-        {
-            var request = new GetServicesByDepartmentRequest { Id = id };
             var response = await _mediator.Send(request);
             return Ok(response);
         }

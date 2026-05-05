@@ -17,13 +17,6 @@ namespace MedFlow.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateServiceRequest request)
-        {
-            var response = await _mediator.Send(request);
-            return Ok(response);
-        }
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {

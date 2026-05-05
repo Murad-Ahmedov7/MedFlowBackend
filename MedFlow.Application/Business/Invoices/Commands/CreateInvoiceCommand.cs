@@ -1,78 +1,80 @@
 ﻿
-using Application.Business.Invoices.Requests;
-using Application.Business.Invoices.Responses;
-using Application.Infrastructure;
-using AutoMapper;
-using DataAccess.Core;
-using Domain.Entities.Billing.Invoices;
-using Domain.ResponseModel;
+//using Application.Business.Invoices.Requests;
+//using Application.Business.Invoices.Responses;
+//using Application.Infrastructure;
+//using AutoMapper;
+//using DataAccess.Core;
+//using Domain.Entities.Billing.Invoices;
+//using Domain.ResponseModel;
 
-namespace Application.Business.Invoices.Commands;
+//namespace Application.Business.Invoices.Commands;
 
-internal sealed class CreateInvoiceCommand : SysRequestHandler<CreateInvoiceRequest, Result<CreateInvoiceResponse>>
-{
-    private readonly SqlUnitOfWork _sqlUnitOfWork;
+//internal sealed class CreateInvoiceCommand : SysRequestHandler<CreateInvoiceRequest, Result<CreateInvoiceResponse>>
+//{
+//    private readonly SqlUnitOfWork _sqlUnitOfWork;
 
-    private readonly IMapper _mapper;
+//    private readonly IMapper _mapper;
 
-    public CreateInvoiceCommand(SqlUnitOfWork sqlUnitOfWork, IMapper mapper, ICurrentUserService currentUserService)
-        : base(currentUserService)
-    {
-        _sqlUnitOfWork = sqlUnitOfWork;
-        _mapper = mapper;
-    }
+//    public CreateInvoiceCommand(SqlUnitOfWork sqlUnitOfWork, IMapper mapper, ICurrentUserService currentUserService)
+//        : base(currentUserService)
+//    {
+//        _sqlUnitOfWork = sqlUnitOfWork;
+//        _mapper = mapper;
+//    }
 
-    public override async Task<Result<CreateInvoiceResponse>> Handle(CreateInvoiceRequest request, CancellationToken cancellationToken)
-    {
-        var patient = await _sqlUnitOfWork.PatientRepository.GetByIdAsync(request.PatientId, cancellationToken);
+//    public override async Task<Result<CreateInvoiceResponse>> Handle(CreateInvoiceRequest request, CancellationToken cancellationToken)
+//    {
+//        var patient = await _sqlUnitOfWork.PatientRepository.GetByIdAsync(request.PatientId, cancellationToken);
 
-        ThrowNotFoundIfNull(patient, "Patient not found");
-
-
-        var newInvoice = new Invoice(request.PatientId);
+//        ThrowNotFoundIfNull(patient, "Patient not found");
 
 
-        foreach (var item in request.InvoiceItems)
-        {
-
-            var departmentService = await _sqlUnitOfWork.DepartmentServiceRepository.GetByIdAsync(item.DepartmentServiceId, cancellationToken);
-
-            ThrowNotFoundIfNull(departmentService, "Service not found in this department");
-
-            var price = departmentService!.Price;
-
-            var service = await _sqlUnitOfWork.ServiceRepository.GetByIdAsync(departmentService.ServiceId, cancellationToken);
-
-            ThrowNotFoundIfNull(service, "Service not found");
+//        var newInvoice = new Invoice(request.PatientId);
 
 
-            var invoiceItem = new InvoiceItem(
-                newInvoice.Id,
-                item.DepartmentServiceId,
-                service!.Name,
-                price,
-                item.Quantity
-                );
+//        foreach (var item in request.InvoiceItems)
+//        {
 
-            invoiceItem.CreatedAt = DateTime.UtcNow;
+//            var departmentService = await _sqlUnitOfWork.DepartmentServiceRepository.GetByIdAsync(item.DepartmentServiceId, cancellationToken);
 
+//            ThrowNotFoundIfNull(departmentService, "Service not found in this department");
 
-            newInvoice.AddItem(invoiceItem);
-        }
+//            var price = departmentService!.Price;
 
-        newInvoice.CreatedAt = DateTime.UtcNow; 
-        newInvoice.CreatedBy = GetCurrentUserIdOrThrow();
+//            var service = await _sqlUnitOfWork.ServiceRepository.GetByIdAsync(departmentService.ServiceId, cancellationToken);
+
+//            ThrowNotFoundIfNull(service, "Service not found");
 
 
-        _sqlUnitOfWork.InvoiceRepository.Add(newInvoice);
+//            var invoiceItem = new InvoiceItem(
+//                newInvoice.Id,
+//                item.DepartmentServiceId,
+//                service!.Name,
+//                price,
+//                item.Quantity
+//                );
+
+//            invoiceItem.CreatedAt = DateTime.UtcNow;
 
 
-        await _sqlUnitOfWork.SaveChangesAsync();
+//            newInvoice.AddItem(invoiceItem);
+//        }
+
+//        newInvoice.CreatedAt = DateTime.UtcNow; 
+//        newInvoice.CreatedBy = GetCurrentUserIdOrThrow();
 
 
-        var response = _mapper.Map<CreateInvoiceResponse>(newInvoice);
+//        _sqlUnitOfWork.InvoiceRepository.Add(newInvoice);
 
 
-        return new Result<CreateInvoiceResponse> { Data = response };
-    }
-}
+//        await _sqlUnitOfWork.SaveChangesAsync();
+
+
+//        var response = _mapper.Map<CreateInvoiceResponse>(newInvoice);
+
+
+//        return new Result<CreateInvoiceResponse> { Data = response };
+//    }
+//}
+
+//DepartmentServices sildik deye bunun hem sql-i hem entitysini hem de kodunu duzelt.

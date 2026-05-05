@@ -6,12 +6,14 @@ using System.Text.Json.Serialization;
 
 namespace Application.Business.Services.Requests;
 
-public record class CreateServiceRequest : IRequest<Result<CreateServiceResponse>>
+public record class CreateServiceForDepartmentRequest : IRequest<Result<CreateServiceForDepartmentResponse>>
 {
     [JsonIgnore]
-    public Guid Id { get; set; }
+    public Guid DepartmentId { get; set; }
 
     public string Name { get; set; } = string.Empty;
+
+    public decimal Price { get; set; }
 
     public string? ImageUrl { get; set; }
 }

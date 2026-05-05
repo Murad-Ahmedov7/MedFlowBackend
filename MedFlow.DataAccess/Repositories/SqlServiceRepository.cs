@@ -11,11 +11,19 @@ public sealed class SqlServiceRepository : BaseSqlRepository<Service>
     {
     }
 
-    public async Task<bool> ExistsByNameAsync(string name, CancellationToken cancellationToken)
+    public async Task<bool> ExistsByNameAndDepartmentAsync(string name, Guid departmentId, CancellationToken cancellationToken = default)
     {
-        return
-            await DbContext.Services
-            .AnyAsync(s => s.Name == name, cancellationToken);
+        return await DbContext.Services
+            .AnyAsync(x => x.Name == name && x.DepartmentId == departmentId, cancellationToken);
     }
+
+    public async Task<List<Service>> GetByDepartmentIdAsync(Guid departmentId, CancellationToken cancellationToken = default)
+    {
+        return await DbContext.Services
+            .Where(x => x.DepartmentId == departmentId)
+            .AsNoTracking()
+            .ToListAsync();
+    }
+
 
 }

@@ -4,7 +4,6 @@ using Domain.Entities.Billing.Invoices;
 using Domain.Entities.Billing.Payments;
 using Domain.Entities.Demo;
 using Domain.Entities.Departments;
-using Domain.Entities.DepartmentServices;
 using Domain.Entities.Doctors;
 using Domain.Entities.DoctorSchedules;
 using Domain.Entities.Examinations;
@@ -92,8 +91,6 @@ public sealed class MedDbContext : DbContext
     public DbSet<PrescriptionItem> PrescriptionItems { get; set; }
 
     public DbSet<Service> Services { get; set; }
-
-    public DbSet<DepartmentService> DepartmentServices { get; set; }
 
     public DbSet<Invoice> Invoices { get; set; }
 

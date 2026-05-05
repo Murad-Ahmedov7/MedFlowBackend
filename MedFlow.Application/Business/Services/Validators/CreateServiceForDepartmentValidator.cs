@@ -5,9 +5,9 @@ using FluentValidation;
 
 namespace Application.Business.Services.Validators
 {
-    public sealed class CreateServiceValidator : AbstractValidator<CreateServiceRequest>
+    public sealed class CreateServiceForDepartmentValidator : AbstractValidator<CreateServiceForDepartmentRequest>
     {
-        public CreateServiceValidator()
+        public CreateServiceForDepartmentValidator()
         {
             RuleFor(x => x.Name)
                 .NotEmpty()

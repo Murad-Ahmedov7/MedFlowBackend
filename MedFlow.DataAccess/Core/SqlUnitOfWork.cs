@@ -44,8 +44,6 @@ public sealed class SqlUnitOfWork
 
     private SqlServiceRepository? _sqlServiceRepository;
 
-    private SqlDepartmentServiceRepository? _sqlDepartmentServiceRepository;
-
     private SqlInvoiceRepository? _sqlInvoiceRepository;
 
     private SqlPaymentRepository? _sqlPaymentRepository;
@@ -84,8 +82,6 @@ public sealed class SqlUnitOfWork
     public SqlPrescriptionRepository PrescriptionRepository => _prescriptionRepository ??= new SqlPrescriptionRepository(_dbContext);
 
     public SqlServiceRepository ServiceRepository => _sqlServiceRepository ??= new SqlServiceRepository(_dbContext);
-
-    public SqlDepartmentServiceRepository DepartmentServiceRepository => _sqlDepartmentServiceRepository ??= new SqlDepartmentServiceRepository(_dbContext);
 
     public SqlInvoiceRepository InvoiceRepository => _sqlInvoiceRepository ??= new SqlInvoiceRepository(_dbContext);
 

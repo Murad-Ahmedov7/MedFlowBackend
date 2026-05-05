@@ -4,8 +4,6 @@ using Application.Business.Categories.Requests;
 using Application.Business.Categories.Responses;
 using Application.Business.Departments.Requests;
 using Application.Business.Departments.Responses;
-using Application.Business.DepartmentServices.Requests;
-using Application.Business.DepartmentServices.Responses;
 using Application.Business.Doctors.Requests;
 using Application.Business.Doctors.Responses;
 using Application.Business.DoctorSchedules.Requests;
@@ -34,7 +32,6 @@ using Domain.Entities.Billing.Invoices;
 using Domain.Entities.Billing.Payments;
 using Domain.Entities.Demo;
 using Domain.Entities.Departments;
-using Domain.Entities.DepartmentServices;
 using Domain.Entities.Doctors;
 using Domain.Entities.DoctorSchedules;
 using Domain.Entities.Examinations;
@@ -122,20 +119,12 @@ public sealed class AutoMapperConfigurator : Profile
         CreateMap<PrescriptionItem, AddPrescriptionItemResponse>();
 
 
-        CreateMap<CreateServiceRequest, Service>();
-        CreateMap<Service, CreateServiceResponse>();
+        CreateMap<CreateServiceForDepartmentRequest, Service>();
+        CreateMap<Service, CreateServiceForDepartmentResponse>();
 
         CreateMap<Service, ServiceResponse>();
 
 
-        CreateMap<CreateDepartmentServiceRequest, DepartmentService>();
-        CreateMap<DepartmentService, DepartmentServiceResponse>();
-
-        CreateMap<DepartmentService, GetServicesByDepartmentResponse>()
-            .ForMember(dest => dest.DepartmentServiceId, opt => opt.MapFrom(src => src.Id))
-            .ForMember(dest => dest.ServiceName, opt => opt.MapFrom(src => src.Service.Name))
-            .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.Service.ImageUrl))
-            .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.Service.CreatedAt));
 
 
         CreateMap<CreateInvoiceRequest, Invoice>();
