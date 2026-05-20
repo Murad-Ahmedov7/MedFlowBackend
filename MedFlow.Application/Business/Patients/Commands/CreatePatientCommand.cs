@@ -26,6 +26,13 @@ internal sealed class CreatePatientCommand : SysRequestHandler<CreatePatientRequ
 
     public override async Task<Result<CreatePatientResponse>> Handle(CreatePatientRequest request, CancellationToken cancellationToken)
     {
+        var existingPatient = await _sqlUnitOfWork.PatientRepository
+        .GetPatientByFinAsync(request.Fin, cancellationToken);
+
+        //if(existingPatient!=null)
+
+        if (existingPatient is not null) ThrowUserError("Bu FIN artıq mövcuddur");
+
         var newPatient = _mapper.Map<Patient>(request);
 
         newPatient.CreatedAt = DateTime.UtcNow;
@@ -45,4 +52,3 @@ internal sealed class CreatePatientCommand : SysRequestHandler<CreatePatientRequ
 
 
 }
-

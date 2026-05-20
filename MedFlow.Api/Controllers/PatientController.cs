@@ -1,6 +1,8 @@
-﻿using Application.Business.Invoices.Requests;
+﻿
+
 using Application.Business.Patients.Requests;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -17,12 +19,34 @@ public class PatientController : MedFlowApiController
         _mediator = mediator;
     }
 
+    [Authorize(Roles = "Admin,Receptionist")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreatePatientRequest request)
     {
         var response = await _mediator.Send(request);
         return Ok(response);
     }
+
+    [Authorize]
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var request = new GetAllPatientsRequest();
+        var response = await _mediator.Send(request);
+        return Ok(response);
+    }
+
+    [Authorize(Roles = "Admin,Receptionist")]
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById([FromRoute] Guid id)
+    {
+        var request = new GetPatientByIdRequest { Id = id };
+        var response = await _mediator.Send(request);
+        return Ok(response);
+    }
+
+
+
 
 
     [HttpGet("by-fin/{fin}")]
@@ -45,6 +69,24 @@ public class PatientController : MedFlowApiController
     public async Task<IActionResult> GetByName([FromQuery] string? firstName, [FromQuery] string? lastName)
     {
         var request = new GetPatientsByNameRequest() { FirstName = firstName, LastName = lastName };
+        var response = await _mediator.Send(request);
+        return Ok(response);
+    }
+    
+    [Authorize(Roles = "Admin,Receptionist")]
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdatePatientRequest request)
+    {
+        request.Id = id;
+        var response = await _mediator.Send(request);
+        return Ok(response);
+    }
+
+    [Authorize(Roles = "Admin,Receptionist")]
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete([FromRoute] Guid id)
+    {
+        var request = new DeletePatientRequest { Id = id };
         var response = await _mediator.Send(request);
         return Ok(response);
     }

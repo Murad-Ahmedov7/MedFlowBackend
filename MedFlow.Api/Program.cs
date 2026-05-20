@@ -8,7 +8,19 @@ using MedFlow.Api.Infrastructures.Services;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DataBaseContext");
 
-builder.Services.AddControllers();
+//builder.Services.AddControllers();
+
+builder.Services
+    .AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions
+            .Converters
+            .Add(
+                new System.Text.Json.Serialization
+                    .JsonStringEnumConverter()
+            );
+    });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSqlServerServices(connectionString!);
 builder.Services.AddApplicationServices();

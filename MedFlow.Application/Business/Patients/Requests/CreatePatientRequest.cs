@@ -1,11 +1,8 @@
-﻿using Application.Business.Patients.Responses;
+﻿
+using Application.Business.Patients.Responses;
+using Domain.Entities.Patients.Enums;
 using Domain.ResponseModel;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Business.Patients.Requests;
 
@@ -23,8 +20,9 @@ public record class CreatePatientRequest:IRequest<Result<CreatePatientResponse>>
 
     public DateTime BirthDate {  get; set; }
 
-    public short Gender { get; set; }      // 1 = Male, 2 = Female
-    public short BloodGroup { get; set; }  // 0–8
+    public Gender Gender { get; set; } // 1 = Male, 2 = Female
+
+    public BloodGroup BloodGroup { get; set; } // 0–8
 
     public string? Allergies { get; set; }
 

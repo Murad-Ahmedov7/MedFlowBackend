@@ -7,7 +7,8 @@ public static class UserRoleExtensions
 {
     private static readonly Dictionary<UserRole, UserRole[]> CreatePermissions = new Dictionary<UserRole, UserRole[]>()
     {
-        {UserRole.Admin,new UserRole[] {UserRole.Receptionist,UserRole.Doctor,UserRole.Patient}}
+        {UserRole.Admin,new UserRole[] {UserRole.Receptionist,UserRole.Doctor,UserRole.Patient}},
+        {UserRole.Receptionist,new UserRole[] {UserRole.Doctor,UserRole.Patient}}
     };
 
     public static bool CanCreate(this UserRole currentRole, UserRole targetRole)

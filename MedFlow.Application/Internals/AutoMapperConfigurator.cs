@@ -68,6 +68,8 @@ public sealed class AutoMapperConfigurator : Profile
         CreateMap<User, SignInUserResponse>();
 
         CreateMap<CreatePatientRequest, Patient>();
+        CreateMap<UpdatePatientRequest, Patient>();
+
 
         CreateMap<Patient, CreatePatientResponse>();
 

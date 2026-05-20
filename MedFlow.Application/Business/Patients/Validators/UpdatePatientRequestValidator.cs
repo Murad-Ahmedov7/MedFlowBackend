@@ -1,12 +1,13 @@
 ﻿
+
 using Application.Business.Patients.Requests;
 using FluentValidation;
 
 namespace Application.Business.Patients.Validators;
 
-public sealed class CreatePatientRequestValidator : AbstractValidator<CreatePatientRequest>
+public sealed class UpdatePatientRequestValidator : AbstractValidator<UpdatePatientRequest>
 {
-    public CreatePatientRequestValidator()
+    public UpdatePatientRequestValidator()
     {
         RuleFor(x => x.FirstName)
             .NotEmpty()
@@ -44,5 +45,7 @@ public sealed class CreatePatientRequestValidator : AbstractValidator<CreatePati
             .IsInEnum()
             .WithMessage("Blood group is invalid");
 
+        RuleFor(x => x.Address)
+            .MaximumLength(255);
     }
 }

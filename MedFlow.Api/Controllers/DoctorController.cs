@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MedFlow.Api.Controllers;
 
-[Authorize(Roles = "Admin")]
+[Authorize(Roles = "Admin, Receptionist")]
 [Route("api/doctors")]
 [ApiController]
 public class DoctorController : MedFlowApiController
