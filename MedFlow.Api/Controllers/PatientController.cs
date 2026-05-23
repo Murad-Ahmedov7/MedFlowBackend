@@ -47,8 +47,6 @@ public class PatientController : MedFlowApiController
 
 
 
-
-
     [HttpGet("by-fin/{fin}")]
     public async Task<IActionResult> GetByFin([FromRoute] string fin)
     {

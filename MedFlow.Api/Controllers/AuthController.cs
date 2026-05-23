@@ -42,4 +42,13 @@ public class AuthController : MedFlowApiController
 
         return Ok(response);
     }
+
+    [Authorize]
+    [HttpPost("change-password")]
+    public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
+    {
+        var response = await _mediator.Send(request);
+
+        return Ok(response);
+    }
 }
